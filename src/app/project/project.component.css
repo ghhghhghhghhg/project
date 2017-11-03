@@ -1,0 +1,27 @@
+.code{
+  margin-top: 10px;
+  width: 96%;
+  margin-left: 3%;
+}
+.color{
+  color: #337ab7;
+}
+
+.textarea{
+  resize: vertical;
+  width: 98%;
+}
+.input{
+  width: 96%;
+}
+h3{
+  margin-left: 3%;
+}
+.marg{
+  margin-right: 10px;
+  margin-left: 10px;
+}
+hr{
+border-width: 20px;
+  border-color: #f2f2f2;
+}

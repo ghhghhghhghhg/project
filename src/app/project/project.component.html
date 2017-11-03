@@ -1,0 +1,63 @@
+<div *ngIf="project">
+<header-app (event)="projectEvent($event)" [url]="redirectUrl" [project]="project"></header-app>
+<div class="color">
+  <div>
+    <h3>{{info}}</h3>
+  </div>
+  <div>
+    <table class="code">
+      <tr>
+        <td><h6>Project Code<span style="color: red">*</span></h6></td>
+        <td><h6>Project Title<span style="color: red">*</span></h6></td>
+      </tr>
+      <tr>
+        <td><input class="input" type="text" [(ngModel)]="project.code"></td>
+        <td><input class="input" type="text" [(ngModel)]="project.title"></td>
+      </tr>
+    </table>
+  </div>
+  <div>
+    <table class="code">
+      <tr>
+        <td><h6>Description</h6></td>
+      </tr>
+      <tr>
+        <td><textarea class="textarea" [(ngModel)]="project.description" ></textarea></td>
+      </tr>
+    </table>
+  </div>
+  <hr>
+  <div>
+    <table class="code">
+      <tr>
+        <td><h6>Implementation Status<span style="color: red">*</span></h6></td>
+      </tr>
+      <tr>
+        <td>
+          <combo-box-app [listObj]="implementationStatusesList" [selectedValue]="project.implementationStatusId"></combo-box-app>
+        </td>
+      </tr>
+    </table>
+    <date-app [(startDate)]="project.startDate" [(endDate)]="project.endDate" ></date-app>
+  </div>
+</div>
+<hr>
+<div>
+  <sectors-list-app [sectors]="project.sectors"></sectors-list-app>
+</div>
+<div class="color code">
+  <combo-box-app [listObj]="sectorsList" [selectedValue]="selectedSectorValue" (selectedId)="selectedId($event)"></combo-box-app>
+  <input class="marg" type="number" #percent>
+  <button (click)="addSector(percent.value)">Add</button>
+</div>
+<hr>
+<div>
+  <locations-list-app [locations]="project.locations"></locations-list-app>
+</div>
+<div class="code color">
+  <button (click)="openPopUp()">Add</button>
+</div>
+<div>
+  <location-popup-app (closePopUp)="closePopUp($event)" [locations]="project.locations" [showPopUp]="showPopUp"></location-popup-app>
+</div>
+</div>

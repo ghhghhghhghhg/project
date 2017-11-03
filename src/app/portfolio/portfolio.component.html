@@ -1,0 +1,30 @@
+<header class="header">
+  <div class="navbar navbar-fixed-top">
+    <h1 class="span">My First Angular Project</h1>
+  </div>
+</header>
+<div>
+  <table class="table-striped table">
+    <tr>
+      <th>N</th>
+      <th>Code</th>
+      <th>Title</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+    <tr *ngFor="let o of projectsPreview; let ind = index">
+      <td class="index" title="{{o.description}}">{{ind + 1}}</td>
+      <td class="code" title="{{o.description}}">{{o.code}}</td>
+      <td title="{{o.description}}">{{o.title}}</td>
+      <td class="bt" title="Edit this project">
+        <button type="button" class="btn btn-default btn-sm " (click)="editProject(o.id)">
+        <span class="glyphicon glyphicon-pencil"></span> Edit
+      </button></td>
+      <td class="bt" title="Delete this project">
+        <button type="button" class="btn btn-default btn-sm" (click)="deleteProject(o.id)">
+        <span class="glyphicon glyphicon-remove"></span> Remove
+      </button></td>
+    </tr>
+  </table>
+</div>
+<button class="btn-primary" (click)="redirect()">Add New Project</button>

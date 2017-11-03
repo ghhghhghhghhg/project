@@ -1,0 +1,38 @@
+#pop{
+  width: 250px;
+  height:350px;
+  z-index: 100;
+  padding: 10px 0 0 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  margin-top: 10%;
+  background-color: #f4fffc;
+  border-radius: 10px;
+  display: block;
+}
+
+#bg{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  background: rgba(0,0,0, .7);
+  display: block;
+}
+.code{
+  margin-top: 10px;
+  width: 96%;
+  margin-left: 3%;
+}
+.color{
+  color: #337ab7;
+}
+button {
+  margin-top: 10px;
+  margin-right: 5px;
+}

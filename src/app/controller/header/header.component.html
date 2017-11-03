@@ -1,0 +1,11 @@
+<header class="header">
+  <div class="navbar navbar-fixed-top">
+    <span *ngIf="project.code && project.title" class="header-a">{{project.code}} - {{project.title}}</span>
+    <div class="div">
+      <button class="save btn-success" (click)="OutputEvent(1)">SAVE</button>
+      <button class="save btn-primary" (click)="OutputEvent(2)">SAVE&CLOSE</button>
+      <button class="save btn-danger" (click)="OutputEvent(3)">CANCEL</button>
+    </div>
+    <h6 *ngIf="project.modifyUser && project.modifyDate">Last Modified by {{project.modifyUser}} on {{project.modifyDate | appDate | date}}</h6>
+  </div>
+</header>

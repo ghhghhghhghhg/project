@@ -1,0 +1,25 @@
+{
+  "id": null,
+  "code": "NA124",
+  "title": "New Project",
+  "description": "New project desc",
+  "implementationStatusId": "17",
+  "startDate": 1508219989049,
+  "endDate": 1508229989049,
+  "sectors": [
+    {
+      "id": 12,
+      "percent": 14
+    }
+  ],
+  "location": [
+    {
+      "districtId": 12,
+      "percent": 22
+    }
+  ],
+  "lastModify": {
+    "user": "Admin",
+    "modifyDate": 1508219999049
+  }
+}
