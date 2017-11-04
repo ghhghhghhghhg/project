@@ -28,24 +28,22 @@ export class LocationPopupComponent implements OnInit {
     );
   }
 
-  exportDistrictId(selectedId: number){
+  exportDistrictId(selectedId: number) {
     this.districtSelectedValue = selectedId;
   }
 
   addLocation() {
-    if(this.countrySelectedValue !== -1){
+    if (this.countrySelectedValue != -1 && this.districtSelectedValue != -1) {
       let classifierCountry = new Classifier(this.countrySelectedValue);
-      let classifierDistrict = this.districtSelectedValue === -1 ? new Classifier(): new Classifier(this.districtSelectedValue);
+      let classifierDistrict = this.districtSelectedValue === -1 ? new Classifier() : new Classifier(this.districtSelectedValue);
       this.dataService.getCountry(this.countrySelectedValue).subscribe(
         data => {
           classifierCountry.name = data
         }
       );
-      if(this.districtSelectedValue !== -1){
-        this.dataService.getDistrict(this.districtSelectedValue).subscribe(
-          data => classifierDistrict.name = data
-        );
-      }
+      this.dataService.getDistrict(this.districtSelectedValue).subscribe(
+        data => classifierDistrict.name = data
+      );
       this.locations.push(new ProjectLocation(classifierCountry, classifierDistrict, this.percent));
       this.closePopUp.emit(false);
       this.districtsList = [];
@@ -66,10 +64,10 @@ export class LocationPopupComponent implements OnInit {
   }
 
   districtsListInitByCountryId(id: number) {
-      this.dataService.getDistricts(id).subscribe(
-        data =>
-          this.districtsList = data
-      );
+    this.dataService.getDistricts(id).subscribe(
+      data =>
+        this.districtsList = data
+    );
   }
 
   countrieslistInit() {

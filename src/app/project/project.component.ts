@@ -27,13 +27,16 @@ export class ProjectComponent implements OnInit{
   project: Project;
 
   addSector() {
-    let classifier = new Classifier(this.sectorSelectedId);
-    this.dataService.getSector(this.sectorSelectedId).subscribe(
-      data => classifier.name = data
-    )
-    this.project.sectors.push(new ProjectSector(classifier, this.sectorPercent));
-    this.sectorSelectedId = -1;
-    this.sectorPercent = undefined;
+    if(this.sectorSelectedId !== -1){
+      let classifier = new Classifier(this.sectorSelectedId);
+      this.dataService.getSector(this.sectorSelectedId).subscribe(
+        data => classifier.name = data
+      )
+      this.project.sectors.push(new ProjectSector(classifier, this.sectorPercent));
+      this.sectorsList = this.sectorsList.filter(sec => sec.id != this.sectorSelectedId);
+      this.sectorSelectedId = -1;
+      this.sectorPercent = undefined;
+    }
   }
 
   openPopUp() {

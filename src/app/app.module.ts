@@ -14,10 +14,10 @@ import { ComboBoxComponent } from "./controller/combo-box/combo-box.component";
 import { SectorsListComponent } from "./project/sectors-list.component";
 import { LocationsListComponent } from "./project/locations-list.component";
 import { LocationPopupComponent} from "./project/location-popup.component";
-import { SectorNamePipe } from "./pipes/sector-name.pipe";
 import {DataServiceImpl} from "./shared/services/data.service";
 import {DataSerializerImpl} from "./shared/services/data.serializer";
 import {DateComponent} from "./controller/date/date.component";
+import {SortListPipe} from "./pipes/sort-list.pipe";
 
 @NgModule({
   declarations: [
@@ -29,8 +29,8 @@ import {DateComponent} from "./controller/date/date.component";
     SectorsListComponent,
     LocationsListComponent,
     LocationPopupComponent,
-    SectorNamePipe,
-    DateComponent
+    DateComponent,
+    SortListPipe
 
   ],
   imports: [
@@ -41,7 +41,6 @@ import {DateComponent} from "./controller/date/date.component";
   ],
   providers: [
     ProjectService,
-    /*{ provide: 'DataService', useExisting: forwardRef(() => DataServiceImpl) }*/
     {provide: "DataService", useClass: DataServiceImpl},
     {provide: "DataSerializer", useClass: DataSerializerImpl}
     ],
