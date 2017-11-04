@@ -6,6 +6,6 @@
       <button class="save btn-primary" (click)="OutputEvent(2)">SAVE&CLOSE</button>
       <button class="save btn-danger" (click)="OutputEvent(3)">CANCEL</button>
     </div>
-    <h6 *ngIf="project.modifyUser && project.modifyDate">Last Modified by {{project.modifyUser}} on {{project.modifyDate | appDate | date}}</h6>
+    <h6 *ngIf="project.modifyUser && project.modifyDate">Last Modified by {{project.modifyUser}} on {{project.modifyDate | date : 'short'}}</h6>
   </div>
 </header>

@@ -40,7 +40,7 @@ export class DataServiceImpl implements DataService {
   }
 
   getImplementationStatuses(): Observable<Array<Classifier>> {
-    return this.http.get(`./app/shared/mock/get-implementation-statuses-res.json`, {headers: this.getHeaders()})
+    return this.http.get(`http://localhost:8080/implimentation-statuses`, {headers: this.getHeaders()})
       .map((resp: Response) => {
         let classifiers: Classifier[] = [];
         for (let obj of resp.json()) {
@@ -54,7 +54,7 @@ export class DataServiceImpl implements DataService {
   }
 
   getSectors(): Observable<Array<Classifier>> {
-    return this.http.get(`app/shared/mock/get-sectors-res.json`, {headers: this.getHeaders()})
+    return this.http.get(`http://localhost:8080/sectors`, {headers: this.getHeaders()})
       .map((resp: Response) => {
         let classifiers: Classifier[] = [];
         for (let obj of resp.json()) {
@@ -68,13 +68,13 @@ export class DataServiceImpl implements DataService {
   }
 
   getSector(id:number): Observable<string> {
-    return this.http.get(`app/shared/mock/get-sector-by-id-res.json`, {headers: this.getHeaders()})
+    return this.http.get(`http://localhost:8080/sectors/${id}`, {headers: this.getHeaders()})
       .map((resp: Response) => resp.json().name)
       .catch((error:any) => {return Observable.throw(error)});
   }
 
   getCountries(): Observable<Array<Classifier>> {
-    return this.http.get(`app/shared/mock/get-countryes-res.json`, {headers: this.getHeaders()})
+    return this.http.get(`http://localhost:8080/countries`, {headers: this.getHeaders()})
       .map((resp: Response) => {
         let classifiers: Classifier[] = [];
         for (let obj of resp.json()) {
@@ -88,7 +88,7 @@ export class DataServiceImpl implements DataService {
   }
 
   getCountry(id: number): Observable<string> {
-    return this.http.get(`app/shared/mock/get-country-by-id-res.json`, {headers: this.getHeaders()})
+    return this.http.get(`http://localhost:8080/countries/${id}`, {headers: this.getHeaders()})
       .map((resp: Response) => resp.json().name)
       .catch((error: any) => {
         return Observable.throw(error)
@@ -96,7 +96,7 @@ export class DataServiceImpl implements DataService {
   }
 
   getDistricts(countryId: number): Observable<Array<Classifier>> {
-    return this.http.get(`app/shared/mock/get-districts-res.json`, {headers: this.getHeaders()})
+    return this.http.get(`http://localhost:8080/districts-by-country/${countryId}`, {headers: this.getHeaders()})
       .map((resp: Response) => {
         let classifiers: Classifier[] = [];
         for (let obj of resp.json()) {
@@ -110,7 +110,7 @@ export class DataServiceImpl implements DataService {
   }
 
   getDistrict(districtId: number): Observable<string> {
-    return this.http.get(`app/shared/mock/get-district-by-id-res.json`, {headers: this.getHeaders()})
+    return this.http.get(`http://localhost:8080/districts/${districtId}`, {headers: this.getHeaders()})
       .map((resp: Response) => resp.json().name)
       .catch((error: any) => {
         return Observable.throw(error)
@@ -118,7 +118,7 @@ export class DataServiceImpl implements DataService {
   }
 
   deleteProject(id: number): Observable<ResponseStatus> {
-    return this.http.delete(`http://localhost:8080/projects/${id}`)
+    return this.http.delete(`http://localhost:8080/projects/${id}`, {headers: this.getHeaders()})
       .map((resp: Response) => this.serializer.serializeResponseStatus(resp.json()))
       .catch((error:any) => {return Observable.throw(error)});
   }

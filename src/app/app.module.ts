@@ -11,14 +11,13 @@ import { ProjectService } from "./shared/services/project.service";
 import { ProjectComponent } from "./project/project.component";
 import { HeaderComponent } from "./controller/header/header.component";
 import { ComboBoxComponent } from "./controller/combo-box/combo-box.component";
-import { DateComponent } from "./project/date.component";
 import { SectorsListComponent } from "./project/sectors-list.component";
 import { LocationsListComponent } from "./project/locations-list.component";
 import { LocationPopupComponent} from "./project/location-popup.component";
 import { SectorNamePipe } from "./pipes/sector-name.pipe";
-import { MillisecondsToDatePipe} from "./pipes/milliseconds-to-date.pipe";
 import {DataServiceImpl} from "./shared/services/data.service";
 import {DataSerializerImpl} from "./shared/services/data.serializer";
+import {DateComponent} from "./controller/date/date.component";
 
 @NgModule({
   declarations: [
@@ -27,12 +26,11 @@ import {DataSerializerImpl} from "./shared/services/data.serializer";
     ProjectComponent,
     HeaderComponent,
     ComboBoxComponent,
-    DateComponent,
     SectorsListComponent,
     LocationsListComponent,
     LocationPopupComponent,
     SectorNamePipe,
-    MillisecondsToDatePipe
+    DateComponent
 
   ],
   imports: [

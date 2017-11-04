@@ -1,83 +1,82 @@
-// import {Component, Input, OnInit} from "@angular/core";
-//
-// @Component({
-//   selector: "date-app",
-//   templateUrl: "./date.component.html",
-//   styleUrls: ["./date.component.css"]
-// })
-// export class DateComponent implements OnInit {
-//
-//   @Input() stDate: Date;
-//   @Input() enDate: Date;
-//   private _duration: number;
-//   private _startStr: string;
-//   private _endStr: string;
-//
-//   get startStr(): string {
-//     return this.getDateStr(this.stDate);
-//   }
-//
-//   set startStr(value: string) {
-//     let date = new Date(value)
-//     this.stDate.setTime(date.getTime());
-//     if(this.enDate){
-//       this._duration = this.days();
-//     }
-//   }
-//
-//   get endStr(): string {
-//     return this.getDateStr(this.enDate);
-//   }
-//
-//   set endStr(value: string) {
-//     let date = new Date(value)
-//     this.enDate.setTime(date.getTime());
-//     if(this.stDate){
-//       this._duration = this.days();
-//     } else {
-//       this._duration = undefined;
-//     }
-//   }
-//
-//   get duration(): number {
-//     return this._duration;
-//   }
-//
-//   set duration(value: number) {
-//     if(this.stDate){
-//       this.enDate.setTime(this.stDate.getTime() + value * 86400000);
-//     }
-//     this._duration = value;
-//   }
-//
-//
-//   getDateStr(date:Date): string{
-//     let str = (date ? date.getFullYear() + "-" +
-//       (date.getMonth() < 9 ? "0" + (date.getMonth() + 1) :
-//         (date.getMonth() + 1)) + "-" +
-//       (date.getDate() < 10 ? "0" + date.getDate() :
-//         date.getDate()) : "");
-//     return str;
-//   }
-//
-//   days(): number {
-//     if (!this.stDate || !this.enDate) {
-//       return undefined;
-//     }
-//     let timeDiff: number = this.enDate.getTime() - this.stDate.getTime();
-//     if (timeDiff < 1) {
-//       alert("Please correct start or end date");
-//       this.enDate = null;
-//       return undefined;
-//     } else {
-//       timeDiff /= 86400000;
-//       return Math.ceil(timeDiff);
-//     }
-//   }
-//
-//   ngOnInit() {
-//     this._duration = this.days();
-//   }
-//
-//
-// }
+import {Component, EventEmitter, Input, Output} from "@angular/core";
+
+@Component({
+  selector: "date-app",
+  templateUrl: "./date.component.html",
+  styleUrls: ["./date.component.css"]
+})
+export class DateComponent{
+
+  private _duration: number;
+
+  @Input() startDate: Date;
+  @Input() endDate: Date;
+  @Output() startDateChange = new EventEmitter<Date>();
+  @Output() endDateChange = new EventEmitter<Date>();
+
+  get duration(): number {
+    return this._duration;
+  }
+
+  set duration(value: number) {
+    this._duration = value;
+  }
+
+  setendDate(value: number){
+    if(this.startDate){
+      this.endDate = new Date(this.startDate.getTime() + this._duration * 86400000);
+    } else if(this.endDate){
+      this.startDate = new Date(this.endDate.getTime() - this._duration * 86400000);
+    }
+}
+
+  changeStartDate(value){
+    if(value){
+      this.startDate = new Date(value);
+      if(this.endDate){
+        this._duration = this.days();
+      } else if(this._duration){
+        this.endDate = new Date(this.startDate.getTime() + this._duration * 86400000);
+      }
+    } else {
+      this.startDate = null;
+      if(this.endDate){
+        this._duration = undefined;
+      }
+    }
+
+    this.startDateChange.emit(this.startDate);
+  }
+
+  changeEndDate(value){
+    if(value){
+      this.endDate = new Date(value);
+      if(this.startDate){
+        this._duration = this.days();
+      } else if(this.duration){
+        this.startDate = new Date(this.endDate.getTime() - this._duration * 86400000);
+      }
+    } else {
+      this.endDate = null;
+      if(this.startDate){
+        this._duration = undefined;
+      }
+    }
+    this.endDateChange.emit(this.endDate);
+  }
+
+  days(): number {
+    if (!this.startDate || !this.endDate) {
+      return undefined;
+    }
+    let timeDiff: number = this.endDate.getTime() - this.startDate.getTime();
+    if (timeDiff < 1) {
+      alert("Please correct start or end date");
+      this.endDate = null;
+      return undefined;
+    } else {
+      timeDiff /= 86400000;
+      return Math.ceil(timeDiff);
+    }
+  }
+}

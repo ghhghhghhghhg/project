@@ -1,6 +1,5 @@
-import {Component, Inject, OnDestroy, OnInit} from "@angular/core";
+import {Component, Inject, OnInit} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {ProjectService} from "../shared/services/project.service";
 import {Classifier} from "../shared/model/classifier";
 import {Project} from "../shared/model/project";
 import {DataService} from "../shared/services/api/data.service";
@@ -11,27 +10,20 @@ import {ProjectSector} from "../shared/model/project-sector";
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.css']
 })
-export class ProjectComponent implements OnInit, OnDestroy {
+export class ProjectComponent implements OnInit{
 
   implementationStatusesList: Classifier[] = [];
   sectorsList: Classifier[] = [];
   selId: number;
 
-  constructor(private route: ActivatedRoute, private projectService: ProjectService, @Inject('DataService') private dataService: DataService, private router: Router) {
+  constructor(private route: ActivatedRoute, @Inject('DataService') private dataService: DataService, private router: Router) {
   }
 
-  sub: any;
-
-  info: string = 'Create new project';
-
+  info: string;
   showPopUp: boolean = false;
-
   redirectUrl: string = '/projects';
-
   selectedSectorValue: number = -1;
-
   project: Project;
-
 
   addSector(per: number) {
     let classifier = new Classifier(this.selId);
@@ -53,6 +45,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     this.dataService.getProject(value).subscribe(
       data => {
         this.project = data;
+        this.info = `Edited project by ID:${this.project.id}`;
         if (this.project.sectors) {
           for (let obj of this.project.sectors) {
             this.dataService.getSector(obj.sector.id).subscribe(
@@ -86,7 +79,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
   }
 
   getSectorsList() {
-    this.projectService.getSectorsList().subscribe(
+    this.dataService.getSectors().subscribe(
       data => {
         this.sectorsList = data;
       }
@@ -95,7 +88,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   projectEvent(value: number) {
     if (value === 1) {
-      {
+      let date: Date = new Date();
+      this.project.modifyDate = date;
+      this.project.modifyUser = "User"
         if (this.project.id) {
           this.dataService.putProject(this.project).subscribe()
         } else {
@@ -105,9 +100,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
             }
           )
         }
-      }
     }
     if (value === 2) {
+      let date: Date = new Date();
+      this.project.modifyDate = date;
+      this.project.modifyUser = "User"
       if (this.project.id) {
         this.dataService.putProject(this.project).subscribe()
       } else {
@@ -129,19 +126,15 @@ export class ProjectComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
     this.getImplementationStatusesList();
     this.getSectorsList();
-    this.sub = this.route.params.subscribe(params => {
+    this.route.params.subscribe(params => {
       if (+params['id']) {
         this.getProjectById(+params['id']);
       } else {
+        this.info = 'Create new project';
         this.project = new Project();
       }
     });
-  }
-
-  ngOnDestroy() {
-    this.sub.unsubscribe();
   }
 }
