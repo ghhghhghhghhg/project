@@ -124,14 +124,14 @@ export class DataServiceImpl implements DataService {
   }
 
   putProject(project: Project): Observable<ResponseStatus> {
-    const body = JSON.stringify(project);
+    const body = this.serializer.deserializeProject(project);
     return this.http.put(`http://localhost:8080/projects`, body, {headers: this.getHeaders()})
       .map((resp: Response) => this.serializer.serializeResponseStatus(resp.json()))
       .catch((error:any) => {return Observable.throw(error)});
   }
 
   postProject(project: Project): Observable<ResponseStatus> {
-    const body = JSON.stringify(project);
+    const body = this.serializer.deserializeProject(project);
     return this.http.post("http://localhost:8080/projects", body, {headers: this.getHeaders()})
       .map((resp: Response) => this.serializer.serializeResponseStatus(resp.json()))
       .catch((error:any) => {return Observable.throw(error)});

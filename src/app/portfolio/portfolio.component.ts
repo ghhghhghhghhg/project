@@ -28,7 +28,13 @@ export class PortfolioComponent {
   }
 
   deleteProject(value: number){
-    this.dataService.deleteProject(value).subscribe();
+    this.dataService.deleteProject(value).subscribe(
+      data => {
+        if(data.success){
+          this.projectsPreview = this.projectsPreview.filter(pr => pr.id != data.id);
+        }
+      }
+    );
 
   }
 

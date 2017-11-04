@@ -9,7 +9,7 @@ export class Project {
   implementationStatusId: number = -1;
   sectors: ProjectSector[] = [];
   locations: ProjectLocation[] = [];
-  startDate: Date = new Date();
+  startDate: Date;
   endDate: Date;
   modifyUser: string;
   modifyDate: Date;

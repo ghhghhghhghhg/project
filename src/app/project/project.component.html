@@ -46,9 +46,9 @@
   <sectors-list-app [sectors]="project.sectors"></sectors-list-app>
 </div>
 <div class="color code">
-  <combo-box-app [listObj]="sectorsList" [selectedValue]="selectedSectorValue" (selectedId)="selectedId($event)"></combo-box-app>
-  <input class="marg" type="number" #percent>
-  <button (click)="addSector(percent.value)">Add</button>
+  <combo-box-app [listObj]="sectorsList" [selectedValue]="sectorSelectedId" (selectedId)="selectedId($event)"></combo-box-app>
+  <input class="marg" type="number" [(ngModel)]="sectorPercent">
+  <button (click)="addSector()">Add</button>
 </div>
 <hr>
 <div>

@@ -12,8 +12,8 @@ export class LocationPopupComponent implements OnInit {
   @Input() locations: ProjectLocation[];
   @Input() showPopUp: boolean;
   @Output() closePopUp = new EventEmitter<boolean>();
-  countrySelectedValue: number;
-  districtSelectedValue: number;
+  countrySelectedValue: number = -1;
+  districtSelectedValue: number = -1;
   percent: number;
   countriesList: Classifier[] = [];
   districtsList: Classifier[] = [];
@@ -32,28 +32,37 @@ export class LocationPopupComponent implements OnInit {
     this.districtSelectedValue = selectedId;
   }
 
-  addLocation(per: number) {
-    let classifierCountry = new Classifier(this.countrySelectedValue);
-    let classifierDistrict = new Classifier(this.districtSelectedValue);
-    this.dataService.getCountry(this.countrySelectedValue).subscribe(
-      data => {
-        classifierCountry.name = data
+  addLocation() {
+    if(this.countrySelectedValue !== -1){
+      let classifierCountry = new Classifier(this.countrySelectedValue);
+      let classifierDistrict = this.districtSelectedValue === -1 ? new Classifier(): new Classifier(this.districtSelectedValue);
+      this.dataService.getCountry(this.countrySelectedValue).subscribe(
+        data => {
+          classifierCountry.name = data
+        }
+      );
+      if(this.districtSelectedValue !== -1){
+        this.dataService.getDistrict(this.districtSelectedValue).subscribe(
+          data => classifierDistrict.name = data
+        );
       }
-    );
-    this.dataService.getDistrict(this.districtSelectedValue).subscribe(
-      data => classifierDistrict.name = data
-    );
-    this.locations.push(new ProjectLocation(classifierCountry, classifierDistrict, per));
-    this.closePopUp.emit(false);
-    this.districtsList = [];
-    this.percent = undefined;
-    this.showPopUp = false;
+      this.locations.push(new ProjectLocation(classifierCountry, classifierDistrict, this.percent));
+      this.closePopUp.emit(false);
+      this.districtsList = [];
+      this.percent = undefined;
+      this.showPopUp = false;
+      this.countrySelectedValue = -1;
+      this.districtSelectedValue = -1;
+      this.percent = undefined;
+    }
   }
 
   cancel() {
     this.closePopUp.emit(false);
     this.districtsList = [];
     this.showPopUp = false;
+    this.countrySelectedValue = -1;
+    this.districtSelectedValue = -1;
   }
 
   districtsListInitByCountryId(id: number) {

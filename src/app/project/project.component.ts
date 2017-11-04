@@ -14,7 +14,8 @@ export class ProjectComponent implements OnInit{
 
   implementationStatusesList: Classifier[] = [];
   sectorsList: Classifier[] = [];
-  selId: number;
+  sectorSelectedId: number = -1;
+  sectorPercent: number;
 
   constructor(private route: ActivatedRoute, @Inject('DataService') private dataService: DataService, private router: Router) {
   }
@@ -25,12 +26,14 @@ export class ProjectComponent implements OnInit{
   selectedSectorValue: number = -1;
   project: Project;
 
-  addSector(per: number) {
-    let classifier = new Classifier(this.selId);
-    this.dataService.getSector(this.selId).subscribe(
+  addSector() {
+    let classifier = new Classifier(this.sectorSelectedId);
+    this.dataService.getSector(this.sectorSelectedId).subscribe(
       data => classifier.name = data
     )
-    this.project.sectors.push(new ProjectSector(classifier, per))
+    this.project.sectors.push(new ProjectSector(classifier, this.sectorPercent));
+    this.sectorSelectedId = -1;
+    this.sectorPercent = undefined;
   }
 
   openPopUp() {
@@ -118,7 +121,7 @@ export class ProjectComponent implements OnInit{
   }
 
   selectedId(value: number) {
-    this.selId = value;
+    this.sectorSelectedId = value;
   }
 
   redirect() {

@@ -38,7 +38,34 @@ export class DataSerializerImpl implements DataSerializer {
   }
 
   deserializeProject(project: Project): Object {
-    return undefined;
+    let sec: {id: number, percent: number}[];
+    let loc: {countryId: number, districtId: number, percent: number}[];
+    if(project.sectors){
+      sec = [];
+      for(let obj of project.sectors){
+        sec.push({id: obj.sector.id, percent: obj.percent})
+      }
+    }
+    if(project.locations){
+      loc = [];
+      for(let obj of project.locations){
+        loc.push({countryId: obj.country.id, districtId: obj.district.id, percent: obj.percent})
+      }
+    }
+    let obj = {
+      id: project.id,
+      code: project.code,
+      title: project.title,
+      description: project.description,
+      implementationStatusId: project.implementationStatusId,
+      startDate: project.startDate?project.startDate.getTime():null,
+      endDate: project.endDate?project.endDate.getTime():null,
+      modifyUser: project.modifyUser,
+      modifyDate: project.modifyDate?project.modifyDate.getTime():null,
+      sectors: sec,
+      locations: loc
+    }
+     return obj;
   }
 
   serializeClassifier(src: Object): Classifier {
