@@ -16,8 +16,8 @@ export class DataSerializerImpl implements DataSerializer {
     project.title = src["title"];
     project.description = src["description"];
     project.implementationStatusId = src["implementationStatusId"];
-    project.startDate = new Date(src["startDate"]);
-    project.endDate = new Date(src["endDate"]);
+    project.startDate = src["startDate"]?new Date(src["startDate"]):null;
+    project.endDate = src["endDate"]?new Date(src["endDate"]):null;
     project.modifyUser = src["modifyUser"];
     project.modifyDate = src["modifyDate"];
     if (src["sectors"]) {

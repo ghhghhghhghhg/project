@@ -66,7 +66,7 @@ export class ProjectComponent implements OnInit, AfterViewChecked{
           for (let obj of this.project.sectors) {
             this.dataService.getSector(obj.sector.id).subscribe(
               data => {
-                obj.sector.name = data
+                obj.sector.name = data;
                 this.sectorsList = this.sectorsList.filter(sec => sec.name != data);
               }
             )
@@ -106,7 +106,7 @@ export class ProjectComponent implements OnInit, AfterViewChecked{
   }
 
   projectEvent(value: number) {
-    if (value === 1) {
+    if (value == 1) {
       let date: Date = new Date();
       this.project.modifyDate = date;
       this.project.modifyUser = "User"
@@ -115,12 +115,12 @@ export class ProjectComponent implements OnInit, AfterViewChecked{
         } else {
           this.dataService.postProject(this.project).subscribe(
             data => {
-              this.project.id = data.id
+              this.project.id = data.id;
             }
           )
         }
     }
-    if (value === 2) {
+    if (value == 2) {
       let date: Date = new Date();
       this.project.modifyDate = date;
       this.project.modifyUser = "User"
@@ -133,10 +133,16 @@ export class ProjectComponent implements OnInit, AfterViewChecked{
           }
         )
       } else {
-        this.dataService.postProject(this.project).subscribe()
+        this.dataService.postProject(this.project).subscribe(
+          data => {
+            if(data.success){
+              this.redirect();
+            }
+          }
+        )
       }
     }
-    if (value === 3) {
+    if (value == 3) {
       this.redirect();
     }
   }
