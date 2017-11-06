@@ -16,7 +16,7 @@
         <td><h6>District<span style="color: red">*</span></h6></td>
       </tr>
       <tr>
-        <td><combo-box-app (selectedId)="exportDistrictId($event)" [listObj]="districtsList"></combo-box-app></td>
+        <td><combo-box-app (selectedId)="exportDistrictId($event)" [listObj]="districtsList" #dis></combo-box-app></td>
       </tr>
     </table>
   </div>
@@ -31,7 +31,7 @@
   </table>
 </div>
 <div class="code">
-  <button (click)="addLocation()">Add</button>
+  <button [disabled]="dis.selectedValue == -1" (click)="addLocation()">Add</button>
   <button (click)="cancel()">Cancel</button>
 </div>
 </div>

@@ -1,5 +1,7 @@
+<form [formGroup]="form">
 <div *ngIf="project">
-<header-app (event)="projectEvent($event)" [url]="redirectUrl" [project]="project"></header-app>
+<header-app (event)="projectEvent($event)" [url]="redirectUrl" [project]="project"
+            [isValid]="form.valid && impl.selectedValue != -1 && date.startDate"></header-app>
 <div class="color">
   <div>
     <h3>{{info}}</h3>
@@ -11,8 +13,8 @@
         <td><h6>Project Title<span style="color: red">*</span></h6></td>
       </tr>
       <tr>
-        <td><input class="input" type="text" [(ngModel)]="project.code" #code required></td>
-        <td><input class="input" type="text" [(ngModel)]="project.title" #title></td>
+        <td><input class="input" type="text" [(ngModel)]="project.code" formControlName="code"></td>
+        <td><input class="input" type="text" [(ngModel)]="project.title" formControlName="title"></td>
       </tr>
     </table>
   </div>
@@ -22,7 +24,7 @@
         <td><h6>Description</h6></td>
       </tr>
       <tr>
-        <td><textarea class="textarea" [(ngModel)]="project.description" ></textarea></td>
+        <td><textarea class="textarea" [(ngModel)]="project.description" [ngModelOptions]="{standalone: true}"></textarea></td>
       </tr>
     </table>
   </div>
@@ -34,11 +36,11 @@
       </tr>
       <tr>
         <td>
-          <combo-box-app [listObj]="implementationStatusesList" [selectedValue]="project.implementationStatusId"></combo-box-app>
+          <combo-box-app [listObj]="implementationStatusesList" [selectedValue]="project.implementationStatusId" #impl></combo-box-app>
         </td>
       </tr>
     </table>
-    <date-app [(startDate)]="project.startDate" [(endDate)]="project.endDate" #date ></date-app>
+    <date-app [(startDate)]="project.startDate" [(endDate)]="project.endDate" #date></date-app>
   </div>
 </div>
 <hr>
@@ -47,7 +49,7 @@
 </div>
 <div class="color code">
   <combo-box-app [listObj]="sectorsList" [selectedValue]="sectorSelectedId" (selectedId)="selectedId($event)"></combo-box-app>
-  <input class="marg" type="number" [(ngModel)]="sectorPercent">
+  <input class="marg" type="number" [(ngModel)]="sectorPercent" [ngModelOptions]="{standalone: true}">
   <button (click)="addSector()">Add</button>
 </div>
 <hr>
@@ -61,4 +63,4 @@
   <location-popup-app (closePopUp)="closePopUp($event)" [locations]="project.locations" [showPopUp]="showPopUp"></location-popup-app>
 </div>
 </div>
-
+</form>

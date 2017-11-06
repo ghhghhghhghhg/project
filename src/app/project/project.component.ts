@@ -1,10 +1,10 @@
-import {Component, Inject, OnInit, ViewChild, ElementRef, AfterViewChecked} from "@angular/core";
+import {Component, Inject, OnInit, AfterViewChecked} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Classifier} from "../shared/model/classifier";
 import {Project} from "../shared/model/project";
 import {DataService} from "../shared/services/api/data.service";
 import {ProjectSector} from "../shared/model/project-sector";
-import {FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'project-app',
@@ -155,12 +155,13 @@ export class ProjectComponent implements OnInit, AfterViewChecked{
     this.router.navigate([this.redirectUrl]);
   }
 
-  // form: FormGroup;
+  form: FormGroup;
 
   ngOnInit() {
-    // this.form = new FormGroup({
-    //
-    // })
+    this.form = new FormGroup({
+      code: new FormControl('', Validators.required),
+      title: new FormControl('', Validators.required)
+    })
 
     this.getImplementationStatusesList();
     this.getSectorsList();

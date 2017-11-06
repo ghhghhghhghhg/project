@@ -14,7 +14,7 @@ interface Title{
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent{
-
+  @Input() isValid: boolean = true;
   @Input() url: string;
   @Input()project: Title;
   @Output() event = new EventEmitter<number>();
