@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 
 @Component({
   selector: "date-app",
   templateUrl: "./date.component.html",
   styleUrls: ["./date.component.css"]
 })
-export class DateComponent{
+export class DateComponent implements OnInit{
 
   private _duration: number;
 
@@ -78,5 +78,9 @@ export class DateComponent{
       timeDiff /= 86400000;
       return Math.ceil(timeDiff);
     }
+  }
+
+  ngOnInit(){
+    this._duration = this.days();
   }
 }

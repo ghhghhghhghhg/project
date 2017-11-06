@@ -1,7 +1,7 @@
 <form [formGroup]="form">
 <div *ngIf="project">
 <header-app (event)="projectEvent($event)" [url]="redirectUrl" [project]="project"
-            [isValid]="form.valid && impl.selectedValue != -1 && date.startDate"></header-app>
+            [isValid]="date.startDate && impl.selectedValue != -1 && form.valid"></header-app>
 <div class="color">
   <div>
     <h3>{{info}}</h3>

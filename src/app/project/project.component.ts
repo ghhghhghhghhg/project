@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, AfterViewChecked} from "@angular/core";
+import {Component, Inject, OnInit, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Classifier} from "../shared/model/classifier";
 import {Project} from "../shared/model/project";
@@ -11,7 +11,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.css']
 })
-export class ProjectComponent implements OnInit, AfterViewChecked{
+export class ProjectComponent implements OnInit {
 
   implementationStatusesList: Classifier[] = [];
   sectorsList: Classifier[] = [];
@@ -28,16 +28,16 @@ export class ProjectComponent implements OnInit, AfterViewChecked{
 
   addSector() {
     let perc = 0;
-    for(let obj of this.project.sectors){
-      if(obj.percent){
+    for (let obj of this.project.sectors) {
+      if (obj.percent) {
         perc += obj.percent;
       }
     }
-    if(perc + this.sectorPercent > 100){
+    if (perc + this.sectorPercent > 100) {
       alert(`Please correct sector percent it mast be <= ${100 - perc}`);
       return;
     }
-    if(this.sectorSelectedId !== -1){
+    if (this.sectorSelectedId !== -1) {
       let classifier = new Classifier(this.sectorSelectedId);
       this.dataService.getSector(this.sectorSelectedId).subscribe(
         data => classifier.name = data
@@ -110,15 +110,15 @@ export class ProjectComponent implements OnInit, AfterViewChecked{
       let date: Date = new Date();
       this.project.modifyDate = date;
       this.project.modifyUser = "User"
-        if (this.project.id) {
-          this.dataService.putProject(this.project).subscribe()
-        } else {
-          this.dataService.postProject(this.project).subscribe(
-            data => {
-              this.project.id = data.id;
-            }
-          )
-        }
+      if (this.project.id) {
+        this.dataService.putProject(this.project).subscribe()
+      } else {
+        this.dataService.postProject(this.project).subscribe(
+          data => {
+            this.project.id = data.id;
+          }
+        )
+      }
     }
     if (value == 2) {
       let date: Date = new Date();
@@ -127,7 +127,7 @@ export class ProjectComponent implements OnInit, AfterViewChecked{
       if (this.project.id) {
         this.dataService.putProject(this.project).subscribe(
           data => {
-            if(data.success){
+            if (data.success) {
               this.redirect();
             }
           }
@@ -135,7 +135,7 @@ export class ProjectComponent implements OnInit, AfterViewChecked{
       } else {
         this.dataService.postProject(this.project).subscribe(
           data => {
-            if(data.success){
+            if (data.success) {
               this.redirect();
             }
           }
@@ -174,6 +174,5 @@ export class ProjectComponent implements OnInit, AfterViewChecked{
       }
     });
   }
-  ngAfterViewChecked(){
-  }
+
 }
