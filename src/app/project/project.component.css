@@ -18,8 +18,9 @@ h3{
   margin-left: 3%;
 }
 .marg{
+  margin-top: 0px;
   margin-right: 10px;
-  margin-left: 10px;
+  margin-left: 0px;
 }
 hr{
 border-width: 20px;

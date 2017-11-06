@@ -1,4 +1,4 @@
-<div class="color" id="pop" *ngIf="showPopUp">
+<div class="color" id="pop" *ngIf="showPopUp" [formGroup]="group">
   <h3>Add Project Location</h3>
   <div>
     <table class="code">
@@ -6,7 +6,7 @@
         <td><h6>Country<span style="color: red">*</span></h6></td>
       </tr>
       <tr>
-        <td><combo-box-app (selectedId)="exportCountryId($event)" [listObj]="countriesList"></combo-box-app></td>
+        <td><combo-box-app (selectedId)="exportCountryId($event)" [listObj]="countriesList" [controlName]="'country'" [group]="group"></combo-box-app></td>
       </tr>
     </table>
   </div>
@@ -16,7 +16,7 @@
         <td><h6>District<span style="color: red">*</span></h6></td>
       </tr>
       <tr>
-        <td><combo-box-app (selectedId)="exportDistrictId($event)" [listObj]="districtsList"></combo-box-app></td>
+        <td><combo-box-app (selectedId)="exportDistrictId($event)" [listObj]="districtsList" [controlName]="'district'" [group]="group"></combo-box-app></td>
       </tr>
     </table>
   </div>
@@ -26,7 +26,7 @@
       <td><h6>%</h6></td>
     </tr>
     <tr>
-      <td><input type="number" [(ngModel)] = "percent"></td>
+      <td><input type="number" [(ngModel)] = "percent" formControlName="locationPercent"></td>
     </tr>
   </table>
 </div>

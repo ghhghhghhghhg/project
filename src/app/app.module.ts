@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {HttpModule} from "@angular/http";
-import {FormsModule} from "@angular/forms";
+import {ReactiveFormsModule} from "@angular/forms";
 
 import {AppRoutingModule} from "./app-routing.module";
 
@@ -36,7 +36,7 @@ import {SortListPipe} from "./pipes/sort-list.pipe";
   imports: [
     BrowserModule,
     HttpModule,
-    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule
   ],
   providers: [

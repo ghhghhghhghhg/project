@@ -1,13 +1,16 @@
-<table class="code">
-  <tr>
-    <td><h6>Planned Start Date<span style="color: red">*</span></h6></td>
-    <td><h6>Planned End Date</h6></td>
-    <td><h6>Duration</h6></td>
-  </tr>
-  <tr>
-    <td><input type="date" [ngModel] = "startDate | date: 'yyyy-MM-dd'" (change)="changeStartDate($event.target.value)" ></td>
-    <td><input type="date" [ngModel] = "endDate | date: 'yyyy-MM-dd'" (change)="changeEndDate($event.target.value)"></td>
-    <td><input type="number" [(ngModel)] = "duration" (change)="setendDate($event.target.value)"></td>
-  </tr>
-</table>
+<div [formGroup]="group">
+  <table class="code">
+    <tr>
+      <td><h6>Planned Start Date<span style="color: red">*</span></h6></td>
+      <td><h6>Planned End Date</h6></td>
+      <td><h6>Duration</h6></td>
+    </tr>
+    <tr>
+      <td><input type="date" [ngModel] = "startDate | date: 'yyyy-MM-dd'" (change)="changeStartDate($event.target.value)" formControlName="startDate" ></td>
+      <td><input type="date" [ngModel] = "endDate | date: 'yyyy-MM-dd'" (change)="changeEndDate($event.target.value)" formControlName="endDate"></td>
+      <td><input type="number" [(ngModel)] = "duration" (change)="setendDate($event.target.value)" formControlName="duration"></td>
+    </tr>
+  </table>
+</div>
+
 

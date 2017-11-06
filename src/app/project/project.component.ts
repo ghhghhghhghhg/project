@@ -1,16 +1,17 @@
-import {Component, Inject, OnInit} from "@angular/core";
+import {AfterViewInit, Component, Inject, OnInit} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Classifier} from "../shared/model/classifier";
 import {Project} from "../shared/model/project";
 import {DataService} from "../shared/services/api/data.service";
 import {ProjectSector} from "../shared/model/project-sector";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'project-app',
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.css']
 })
-export class ProjectComponent implements OnInit{
+export class ProjectComponent implements OnInit, AfterViewInit{
 
   implementationStatusesList: Classifier[] = [];
   sectorsList: Classifier[] = [];
@@ -131,8 +132,10 @@ export class ProjectComponent implements OnInit{
     this.router.navigate([this.redirectUrl]);
   }
 
+  form: FormGroup;
+
   ngOnInit() {
-    this.getImplementationStatusesList();
+       this.getImplementationStatusesList();
     this.getSectorsList();
     this.route.params.subscribe(params => {
       if (+params['id']) {
@@ -142,5 +145,31 @@ export class ProjectComponent implements OnInit{
         this.project = new Project();
       }
     });
+    this.form = new FormGroup({
+      code: new FormControl('', Validators.required),
+      title: new FormControl('', Validators.required),
+      startDate: new FormControl(''),
+      endDate: new FormControl(''),
+      duration: new FormControl(''),
+      impl: new FormControl('-1'),
+      description: new FormControl(''),
+      sectorpercent: new FormControl(''),
+
+
+      locationPercent: new FormControl(''),
+      sectorPercent: new FormControl(''),
+      select: new FormControl(''),
+      district: new FormControl(''),
+      country: new FormControl(''),
+      sectorSel: new FormControl('')
+    })
+  }
+
+  ngAfterContentInit(){
+
+  }
+
+  ngAfterViewInit(){
+
   }
 }

@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {FormGroup} from "@angular/forms";
 
 @Component({
   selector: "date-app",
@@ -8,6 +9,8 @@ import {Component, EventEmitter, Input, Output} from "@angular/core";
 export class DateComponent{
 
   private _duration: number;
+
+  @Input() group: FormGroup;
 
   @Input() startDate: Date;
   @Input() endDate: Date;

@@ -2,6 +2,7 @@ import {Component, EventEmitter, Inject, Input, OnInit, Output} from "@angular/c
 import {Classifier} from "../../../../../../Desktop/project/project/src/app/shared/model/classifier";
 import {DataService} from "../shared/services/api/data.service";
 import {ProjectLocation} from "../shared/model/project-location";
+import {FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'location-popup-app',
@@ -9,6 +10,7 @@ import {ProjectLocation} from "../shared/model/project-location";
   styleUrls: ['./location-popup.component.css']
 })
 export class LocationPopupComponent implements OnInit {
+  @Input() group: FormGroup;
   @Input() locations: ProjectLocation[];
   @Input() showPopUp: boolean;
   @Output() closePopUp = new EventEmitter<boolean>();

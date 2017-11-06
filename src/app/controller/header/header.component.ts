@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Router} from "@angular/router";
+import {FormGroup} from "@angular/forms";
 
 interface Title{
   code: string;
@@ -17,6 +18,7 @@ export class HeaderComponent{
 
   @Input() url: string;
   @Input()project: Title;
+  @Input() group: FormGroup;
   @Output() event = new EventEmitter<number>();
 
   constructor(private router: Router){}
