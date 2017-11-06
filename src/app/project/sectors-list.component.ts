@@ -9,8 +9,17 @@ import {ProjectSector} from "../shared/model/project-sector";
 })
 export class SectorsListComponent{
 
+  isSortSectorListByDESC: boolean = false;
   @Input() sectors: ProjectSector[] = [];
 
   constructor(private projectService: ProjectService){  }
+
+  SortASC(){
+    this.isSortSectorListByDESC = false;
+  }
+
+  SortDESC(){
+    this.isSortSectorListByDESC = true;
+  }
 
 }

@@ -3,12 +3,12 @@
   <table class="code table">
     <thead>
     <tr>
-      <td width="200px"><h6>Sector Name<span><div class="glyphicon glyphicon-triangle-top"></div><div class="glyphicon glyphicon-triangle-bottom"></div></span></h6></td>
+      <td width="200px"><h6>Sector Name<span><div class="glyphicon glyphicon-triangle-top" (click)="SortASC()"></div><div class="glyphicon glyphicon-triangle-bottom" (click)="SortDESC()"></div></span></h6></td>
       <td width="20px"><h6>%</h6></td>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let o of sectors | sort: 'name'">
+    <tr *ngFor="let o of sectors | pipeSortSector: isSortSectorListByDESC ">
       <td>{{o.sector.name}}</td>
       <td>{{o.percent}}</td>
     </tr>

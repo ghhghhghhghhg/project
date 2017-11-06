@@ -24,7 +24,12 @@ export class LocationPopupComponent implements OnInit {
   exportCountryId(selectedId: number) {
     this.countrySelectedValue = selectedId;
     this.dataService.getDistricts(selectedId).subscribe(
-      date => this.districtsList = date
+      data => {
+        this.districtsList = data
+      for(let obj of this.locations){
+        this.districtsList = this.districtsList.filter(sec => sec.id != obj.district.id);
+    }
+  }
     );
   }
 
@@ -33,6 +38,16 @@ export class LocationPopupComponent implements OnInit {
   }
 
   addLocation() {
+    let perc = 0;
+    for(let obj of this.locations){
+      if(obj.percent){
+        perc += obj.percent;
+      }
+    }
+    if(perc + this.percent >100){
+      alert(`Please correct percent it mast be <= ${100 - perc}`);
+      return;
+    }
     if (this.countrySelectedValue != -1 && this.districtSelectedValue != -1) {
       let classifierCountry = new Classifier(this.countrySelectedValue);
       let classifierDistrict = this.districtSelectedValue === -1 ? new Classifier() : new Classifier(this.districtSelectedValue);
@@ -75,7 +90,6 @@ export class LocationPopupComponent implements OnInit {
       data =>
         this.countriesList = data
     );
-
   }
 
   ngOnInit() {

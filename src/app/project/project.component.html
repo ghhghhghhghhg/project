@@ -11,8 +11,8 @@
         <td><h6>Project Title<span style="color: red">*</span></h6></td>
       </tr>
       <tr>
-        <td><input class="input" type="text" [(ngModel)]="project.code"></td>
-        <td><input class="input" type="text" [(ngModel)]="project.title"></td>
+        <td><input class="input" type="text" [(ngModel)]="project.code" #code required></td>
+        <td><input class="input" type="text" [(ngModel)]="project.title" #title></td>
       </tr>
     </table>
   </div>
@@ -38,7 +38,7 @@
         </td>
       </tr>
     </table>
-    <date-app [(startDate)]="project.startDate" [(endDate)]="project.endDate" ></date-app>
+    <date-app [(startDate)]="project.startDate" [(endDate)]="project.endDate" #date ></date-app>
   </div>
 </div>
 <hr>
@@ -61,3 +61,4 @@
   <location-popup-app (closePopUp)="closePopUp($event)" [locations]="project.locations" [showPopUp]="showPopUp"></location-popup-app>
 </div>
 </div>
+<div class="area"></div>

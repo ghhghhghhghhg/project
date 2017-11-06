@@ -17,7 +17,8 @@ import { LocationPopupComponent} from "./project/location-popup.component";
 import {DataServiceImpl} from "./shared/services/data.service";
 import {DataSerializerImpl} from "./shared/services/data.serializer";
 import {DateComponent} from "./controller/date/date.component";
-import {SortListPipe} from "./pipes/sort-list.pipe";
+import {SortSectorListPipe} from "./pipes/sort-sector-list.pipe";
+import {SortLocationListPipe} from "./pipes/sort-location-list.pipe";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {SortListPipe} from "./pipes/sort-list.pipe";
     LocationsListComponent,
     LocationPopupComponent,
     DateComponent,
-    SortListPipe
+    SortSectorListPipe,
+    SortLocationListPipe
 
   ],
   imports: [
