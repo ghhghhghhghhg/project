@@ -1,13 +1,12 @@
 import {Pipe} from "@angular/core";
-import {ProjectLocation} from "../shared/model/project-location";
 
 @Pipe({
-  name: "pipeSortLocation"
+  name: "sort"
 })
-export class SortLocationListPipe {
-  transform(array: ProjectLocation[], field: string, desc: boolean = false): ProjectLocation[] {
+export class SortPipe {
+  transform(array: any[], field: string, desc: boolean = false): any[] {
     setTimeout(() => {
-      array.sort((a: ProjectLocation, b: ProjectLocation) => {
+      array.sort((a: any, b: any) => {
         if (desc) {
           if (a[field].name > b[field].name) {
             return -1;

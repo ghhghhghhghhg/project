@@ -9,7 +9,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let o of locations | pipeSortLocation: sortField: isSortSectorListByDESC">
+    <tr *ngFor="let o of locations | sort: sortField: isSortSectorListByDESC">
       <td>{{o.country.name}}</td>
       <td>{{o.district.name}}</td>
       <td>{{o.percent}}</td>

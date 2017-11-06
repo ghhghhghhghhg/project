@@ -4,6 +4,7 @@ import {Classifier} from "../shared/model/classifier";
 import {Project} from "../shared/model/project";
 import {DataService} from "../shared/services/api/data.service";
 import {ProjectSector} from "../shared/model/project-sector";
+import {FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'project-app',
@@ -148,7 +149,13 @@ export class ProjectComponent implements OnInit, AfterViewChecked{
     this.router.navigate([this.redirectUrl]);
   }
 
+  // form: FormGroup;
+
   ngOnInit() {
+    // this.form = new FormGroup({
+    //
+    // })
+
     this.getImplementationStatusesList();
     this.getSectorsList();
     this.route.params.subscribe(params => {
