@@ -21,9 +21,5 @@ export class SectorsListComponent{
   SortDESC(){
     this.isSortSectorListByDESC = true;
   }
-
-  deleteProjectSector(id: number){
-    this.sectors = this.sectors.filter(obj => obj.sector.id != id)
-}
-
+  
 }

@@ -158,7 +158,7 @@ export class ProjectComponent implements OnInit {
   ImplStatuseSelectedId(value: number) {
     this.project.implementationStatusId = value;
   }
-  
+
   ngOnInit() {
     this.form = new FormGroup({
       code: new FormControl('', Validators.required),

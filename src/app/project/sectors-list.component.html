@@ -5,17 +5,12 @@
     <tr>
       <td width="200px"><h6>Sector Name<span><div class="glyphicon glyphicon-triangle-top" (click)="SortASC()"></div><div class="glyphicon glyphicon-triangle-bottom" (click)="SortDESC()"></div></span></h6></td>
       <td width="20px"><h6>%</h6></td>
-      <td width="20px"><h6>Delete</h6></td>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let o of sectors | sort : 'sector' : isSortSectorListByDESC ">
       <td>{{o.sector.name}}</td>
       <td>{{o.percent}}</td>
-      <td class="bt" title="Delete this project">
-        <button type="button" class="btn btn-default btn-sm" (click)="deleteProjectSector(o.sector.id)">
-          <span class="glyphicon glyphicon-remove"></span> Remove
-        </button></td>
     </tr>
     </tbody>
   </table>
