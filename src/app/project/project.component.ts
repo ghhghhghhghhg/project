@@ -12,7 +12,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
   styleUrls: ['./project.component.css']
 })
 export class ProjectComponent implements OnInit {
-
+  form: FormGroup;
   implementationStatusesList: Classifier[] = [];
   sectorsList: Classifier[] = [];
   sectorSelectedId: number = -1;
@@ -155,8 +155,10 @@ export class ProjectComponent implements OnInit {
     this.router.navigate([this.redirectUrl]);
   }
 
-  form: FormGroup;
-
+  ImplStatuseSelectedId(value: number) {
+    this.project.implementationStatusId = value;
+  }
+  
   ngOnInit() {
     this.form = new FormGroup({
       code: new FormControl('', Validators.required),

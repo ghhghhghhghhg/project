@@ -36,7 +36,7 @@
       </tr>
       <tr>
         <td>
-          <combo-box-app [listObj]="implementationStatusesList" [selectedValue]="project.implementationStatusId" #impl></combo-box-app>
+          <combo-box-app [listObj]="implementationStatusesList" [selectedValue]="project.implementationStatusId" (selectedId)="ImplStatuseSelectedId($event)" #impl></combo-box-app>
         </td>
       </tr>
     </table>
