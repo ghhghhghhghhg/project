@@ -85,8 +85,9 @@ hr {
 }
 
 .div-area {
-  height: 100px;
+  height: 150px;
 }
-.bottom{
+
+.top {
   height: 80px;
 }
