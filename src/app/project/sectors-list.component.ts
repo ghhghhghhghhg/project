@@ -21,5 +21,5 @@ export class SectorsListComponent{
   SortDESC(){
     this.isSortSectorListByDESC = true;
   }
-  
+
 }

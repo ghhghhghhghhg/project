@@ -177,4 +177,7 @@ export class ProjectComponent implements OnInit {
     });
   }
 
+  public isValid(): boolean{
+    return this.project.startDate && this.project.implementationStatusId != -1 && this.form.valid;
+  }
 }

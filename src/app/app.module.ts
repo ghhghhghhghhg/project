@@ -9,7 +9,6 @@ import {AppComponent} from './app.component';
 import {PortfolioComponent} from './portfolio/portfolio.component';
 import {ProjectService} from "./shared/services/project.service";
 import {ProjectComponent} from "./project/project.component";
-import {HeaderComponent} from "./controller/header/header.component";
 import {ComboBoxComponent} from "./controller/combo-box/combo-box.component";
 import {SectorsListComponent} from "./project/sectors-list.component";
 import {LocationsListComponent} from "./project/locations-list.component";
@@ -24,14 +23,12 @@ import {SortPipe} from "./pipes/sort.pipe";
     AppComponent,
     PortfolioComponent,
     ProjectComponent,
-    HeaderComponent,
     ComboBoxComponent,
     SectorsListComponent,
     LocationsListComponent,
     LocationPopupComponent,
     DateComponent,
     SortPipe
-
   ],
   imports: [
     BrowserModule,
