@@ -40,7 +40,7 @@ export class LocationPopupComponent implements OnInit {
           }
         }
       );
-      for(let obj of this.locations){
+      for (let obj of this.locations) {
         if (obj.district.id == value) {
           this.editedLocation = obj;
         }
@@ -74,13 +74,13 @@ export class LocationPopupComponent implements OnInit {
   }
 
   addLocation() {
-    let perc = this.editedLocation.percent?-this.editedLocation.percent:0;
+    let perc = this.editedLocation? this.editedLocation.percent? -this.editedLocation.percent: 0: 0;
     for (let obj of this.locations) {
       if (obj.percent) {
         perc += obj.percent;
       }
     }
-    if (perc + this.percent > 100) {
+    if (this.percent && perc + this.percent > 100) {
       alert(`Please correct percent it mast be <= ${100 - perc}`);
       return;
     }
@@ -95,11 +95,12 @@ export class LocationPopupComponent implements OnInit {
       this.dataService.getDistrict(this.districtSelectedValue).subscribe(
         data => classifierDistrict.name = data
       );
-      if(this.isEdited) {
+      if (this.isEdited) {
         this.editedLocation.percent = this.percent;
         this.editedLocation.country = classifierCountry;
         this.editedLocation.district = classifierDistrict;
       } else {
+        console.log(this.percent)
         this.locations.push(new ProjectLocation(classifierCountry, classifierDistrict, this.percent));
       }
       this.closePopUp.emit(false);
