@@ -103,7 +103,6 @@ export class LocationPopupComponent implements OnInit {
         this.locations.push(new ProjectLocation(classifierCountry, classifierDistrict, this.percent));
       }
       this.countryId = -1;
-      console.log(this.countryId)
       this.districtsList = [];
       this.showPopUp = false;
       this.countrySelectedValue = -1;
