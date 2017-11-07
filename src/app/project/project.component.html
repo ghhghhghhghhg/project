@@ -75,7 +75,7 @@
                            (selectedId)="selectedId($event)" #sec></combo-box-app>
           </td>
           <td>
-            <input class="marg" type="number" [(ngModel)]="sectorPercent" [ngModelOptions]="{standalone: true}">
+            <input class="marg" type="number" [(ngModel)]="sectorPercent" [ngModelOptions]="{standalone: true}" max="100" min="0">
           </td>
           <td>
             <button [disabled]="sec.selectedValue == -1" (click)="addSector()">Add Sector</button>
