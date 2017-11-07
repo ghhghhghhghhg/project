@@ -1,42 +1,36 @@
-import {AfterContentInit, AfterViewInit, Component, Input, OnChanges, OnInit} from "@angular/core";
-import {ProjectService} from "../shared/services/project.service";
-import {LocationsListItem} from "../shared/model/locationsListItem";
+import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {ProjectLocation} from "../shared/model/project-location";
-
-
-interface LocationAndPercent{
-  countryId: number;
-  districtId: number;
-  percent: number;
-}
 
 @Component({
   selector: 'locations-list-app',
   templateUrl: './locations-list.component.html',
   styleUrls: ['./locations-list.component.css']
 })
-export class LocationsListComponent{
+export class LocationsListComponent {
 
   sortField: string = "country";
   isSortSectorListByDESC: boolean = false;
 
   @Input() locations: ProjectLocation[];
+  @Output() deletedLocation = new EventEmitter<ProjectLocation>();
 
-  constructor(private projectService: ProjectService){}
+  deleteLocation(obj: ProjectLocation) {
+    this.deletedLocation.emit(obj);
+  }
 
-  SortASC(by: string){
-    if(by == "country"){
+  sortASC(by: string) {
+    if (by == "country") {
       this.sortField = by;
-    }else {
+    } else {
       this.sortField = "district";
     }
     this.isSortSectorListByDESC = false;
   }
 
-  SortDESC(by: string){
-    if(by == "country"){
+  sortDESC(by: string) {
+    if (by == "country") {
       this.sortField = by;
-    }else {
+    } else {
       this.sortField = "district";
     }
     this.isSortSectorListByDESC = true;

@@ -1,6 +1,6 @@
-#pop{
+#pop {
   width: 250px;
-  height:350px;
+  height: 350px;
   z-index: 100;
   padding: 10px 0 0 10px;
   position: fixed;
@@ -14,24 +14,27 @@
   display: block;
 }
 
-#bg{
+#bg {
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 99;
-  background: rgba(0,0,0, .7);
+  background: rgba(0, 0, 0, .7);
   display: block;
 }
-.code{
+
+.code {
   margin-top: 10px;
   width: 96%;
   margin-left: 3%;
 }
-.color{
+
+.color {
   color: #337ab7;
 }
+
 button {
   margin-top: 10px;
   margin-right: 5px;

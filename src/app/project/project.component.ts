@@ -5,6 +5,7 @@ import {Project} from "../shared/model/project";
 import {DataService} from "../shared/services/api/data.service";
 import {ProjectSector} from "../shared/model/project-sector";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ProjectLocation} from "../shared/model/project-location";
 
 @Component({
   selector: 'project-app',
@@ -164,12 +165,15 @@ export class ProjectComponent implements OnInit {
     this.project.sectors = this.project.sectors.filter(o => o.sector.id != obj.sector.id);
   }
 
+  restoreLocation(obj: ProjectLocation){
+    this.project.locations = this.project.locations.filter(o => o.district.id != obj.district.id);
+  }
+
   ngOnInit() {
     this.form = new FormGroup({
       code: new FormControl('', Validators.required),
       title: new FormControl('', Validators.required)
-    })
-
+    });
     this.getImplementationStatusesList();
     this.getSectorsList();
     this.route.params.subscribe(params => {
@@ -180,9 +184,5 @@ export class ProjectComponent implements OnInit {
         this.project = new Project();
       }
     });
-  }
-
-  public isValid(): boolean {
-    return this.project.startDate && this.project.implementationStatusId != -1 && this.form.valid;
   }
 }

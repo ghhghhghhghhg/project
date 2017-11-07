@@ -67,10 +67,12 @@ export class DataServiceImpl implements DataService {
       });
   }
 
-  getSector(id:number): Observable<string> {
+  getSector(id: number): Observable<string> {
     return this.http.get(`http://localhost:8080/sectors/${id}`, {headers: this.getHeaders()})
       .map((resp: Response) => resp.json().name)
-      .catch((error:any) => {return Observable.throw(error)});
+      .catch((error: any) => {
+        return Observable.throw(error)
+      });
   }
 
   getCountries(): Observable<Array<Classifier>> {
@@ -120,21 +122,27 @@ export class DataServiceImpl implements DataService {
   deleteProject(id: number): Observable<ResponseStatus> {
     return this.http.delete(`http://localhost:8080/projects/${id}`, {headers: this.getHeaders()})
       .map((resp: Response) => this.serializer.serializeResponseStatus(resp.json()))
-      .catch((error:any) => {return Observable.throw(error)});
+      .catch((error: any) => {
+        return Observable.throw(error)
+      });
   }
 
   putProject(project: Project): Observable<ResponseStatus> {
     const body = this.serializer.deserializeProject(project);
     return this.http.put(`http://localhost:8080/projects`, body, {headers: this.getHeaders()})
       .map((resp: Response) => this.serializer.serializeResponseStatus(resp.json()))
-      .catch((error:any) => {return Observable.throw(error)});
+      .catch((error: any) => {
+        return Observable.throw(error)
+      });
   }
 
   postProject(project: Project): Observable<ResponseStatus> {
     const body = this.serializer.deserializeProject(project);
     return this.http.post("http://localhost:8080/projects", body, {headers: this.getHeaders()})
       .map((resp: Response) => this.serializer.serializeResponseStatus(resp.json()))
-      .catch((error:any) => {return Observable.throw(error)});
+      .catch((error: any) => {
+        return Observable.throw(error)
+      });
   }
 
   private getHeaders() {

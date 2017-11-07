@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
-import {ProjectService} from "../shared/services/project.service";
 import {ProjectSector} from "../shared/model/project-sector";
 
 @Component({

@@ -2,12 +2,9 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {HttpModule} from "@angular/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-
 import {AppRoutingModule} from "./app-routing.module";
-
 import {AppComponent} from './app.component';
 import {PortfolioComponent} from './portfolio/portfolio.component';
-import {ProjectService} from "./shared/services/project.service";
 import {ProjectComponent} from "./project/project.component";
 import {ComboBoxComponent} from "./controller/combo-box/combo-box.component";
 import {SectorsListComponent} from "./project/sectors-list.component";
@@ -38,7 +35,6 @@ import {SortPipe} from "./pipes/sort.pipe";
     AppRoutingModule
   ],
   providers: [
-    ProjectService,
     {provide: "DataService", useClass: DataServiceImpl},
     {provide: "DataSerializer", useClass: DataSerializerImpl}
   ],

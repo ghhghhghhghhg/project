@@ -3,9 +3,16 @@
   <table class="code table">
     <thead>
     <tr>
-      <td width="200px"><h6>Country<span><div class="glyphicon glyphicon-triangle-top" (click)="SortASC('country')"></div><div class="glyphicon glyphicon-triangle-bottom" (click)="SortDESC('country')"></div></span></h6></td>
-      <td width="250px"><h6>District<span><div class="glyphicon glyphicon-triangle-top" (click)="SortASC('district')"></div><div class="glyphicon glyphicon-triangle-bottom" (click)="SortDESC('district')"></div></span></h6></td>
+      <td width="200px">
+        <h6>Country<span><div class="glyphicon glyphicon-triangle-top" (click)="sortASC('country')"></div><div
+          class="glyphicon glyphicon-triangle-bottom" (click)="sortDESC('country')"></div></span></h6>
+      </td>
+      <td width="250px">
+        <h6>District<span><div class="glyphicon glyphicon-triangle-top" (click)="sortASC('district')"></div><div
+          class="glyphicon glyphicon-triangle-bottom" (click)="sortDESC('district')"></div></span></h6>
+      </td>
       <td width="20px"><h6>%</h6></td>
+      <td width="20px"><h6>Delete Location</h6></td>
     </tr>
     </thead>
     <tbody>
@@ -13,6 +20,11 @@
       <td>{{o.country.name}}</td>
       <td>{{o.district.name}}</td>
       <td>{{o.percent}}</td>
+      <td class="bt" title="Delete this location">
+        <button type="button" class="btn btn-default btn-sm" (click)="deleteLocation(o)">
+          <span class="glyphicon glyphicon-remove"></span> Remove
+        </button>
+      </td>
     </tr>
     </tbody>
   </table>

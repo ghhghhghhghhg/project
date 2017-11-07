@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Inject, Input, OnInit, Output} from "@angular/core";
-import {Classifier} from "../../../../../../Desktop/project/project/src/app/shared/model/classifier";
 import {DataService} from "../shared/services/api/data.service";
 import {ProjectLocation} from "../shared/model/project-location";
+import {Classifier} from "../shared/model/classifier";
 
 @Component({
   selector: 'location-popup-app',
@@ -26,10 +26,10 @@ export class LocationPopupComponent implements OnInit {
     this.dataService.getDistricts(selectedId).subscribe(
       data => {
         this.districtsList = data
-      for(let obj of this.locations){
-        this.districtsList = this.districtsList.filter(sec => sec.id != obj.district.id);
-    }
-  }
+        for (let obj of this.locations) {
+          this.districtsList = this.districtsList.filter(sec => sec.id != obj.district.id);
+        }
+      }
     );
   }
 
@@ -39,12 +39,12 @@ export class LocationPopupComponent implements OnInit {
 
   addLocation() {
     let perc = 0;
-    for(let obj of this.locations){
-      if(obj.percent){
+    for (let obj of this.locations) {
+      if (obj.percent) {
         perc += obj.percent;
       }
     }
-    if(perc + this.percent >100){
+    if (perc + this.percent > 100) {
       alert(`Please correct percent it mast be <= ${100 - perc}`);
       return;
     }

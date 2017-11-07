@@ -85,7 +85,7 @@
     </div>
     <hr>
     <div>
-      <locations-list-app [locations]="project.locations"></locations-list-app>
+      <locations-list-app [locations]="project.locations" (deletedLocation)="restoreLocation($event)"></locations-list-app>
     </div>
     <div class="code color">
       <button (click)="openPopUp()">Add</button>

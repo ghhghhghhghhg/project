@@ -1,35 +1,41 @@
-.code{
+.code {
   margin-top: 10px;
   width: 96%;
   margin-left: 3%;
 }
 
-.sector{
+.sector {
   margin-left: 3%;
 }
-.color{
+
+.color {
   color: #337ab7;
 }
 
-.textarea{
+.textarea {
   resize: vertical;
   width: 98%;
 }
-.input{
+
+.input {
   width: 96%;
 }
-h3{
+
+h3 {
   margin-left: 3%;
 }
-.marg{
+
+.marg {
   margin-right: 10px;
   margin-left: 10px;
 }
-hr{
-border-width: 20px;
+
+hr {
+  border-width: 20px;
   border-color: #f2f2f2;
 }
-.area{
+
+.area {
   height: 100px;
 }
 
@@ -41,7 +47,7 @@ border-width: 20px;
   color: white;
 }
 
-.save{
+.save {
   margin-top: 10px;
   color: #337ab7;
   font-weight: bold;
@@ -49,33 +55,36 @@ border-width: 20px;
   border-color: #3177b2;
 }
 
-.div{
+.div {
   text-align: right;
   margin-right: 3%;
 }
-.header-div{
+
+.header-div {
   padding: 10px;
   padding-left: 30px;
 
 }
 
-.header-button{
+.header-button {
   padding: 5px;
   margin: 2px;
 }
 
-.header-p{
+.header-p {
   margin-top: 0px;
   padding-top: 20px;
 }
 
-.header-a{
+.header-a {
   margin-left: 3%;
 }
-.h6{
+
+.h6 {
   margin-left: 3%;
 }
-.div-area{
+
+.div-area {
   height: 100px;
 }
 

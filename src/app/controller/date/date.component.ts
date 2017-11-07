@@ -5,7 +5,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
   templateUrl: "./date.component.html",
   styleUrls: ["./date.component.css"]
 })
-export class DateComponent implements OnInit{
+export class DateComponent implements OnInit {
 
   private _duration: number;
 
@@ -22,25 +22,25 @@ export class DateComponent implements OnInit{
     this._duration = value;
   }
 
-  setendDate(value: number){
-    if(this.startDate){
+  setendDate(value: number) {
+    if (this.startDate) {
       this.endDate = new Date(this.startDate.getTime() + this._duration * 86400000);
-    } else if(this.endDate){
+    } else if (this.endDate) {
       this.startDate = new Date(this.endDate.getTime() - this._duration * 86400000);
     }
-}
+  }
 
-  changeStartDate(value){
-    if(value){
+  changeStartDate(value) {
+    if (value) {
       this.startDate = new Date(value);
-      if(this.endDate){
+      if (this.endDate) {
         this._duration = this.days();
-      } else if(this._duration){
+      } else if (this._duration) {
         this.endDate = new Date(this.startDate.getTime() + this._duration * 86400000);
       }
     } else {
       this.startDate = null;
-      if(this.endDate){
+      if (this.endDate) {
         this._duration = undefined;
       }
     }
@@ -48,17 +48,17 @@ export class DateComponent implements OnInit{
     this.startDateChange.emit(this.startDate);
   }
 
-  changeEndDate(value){
-    if(value){
+  changeEndDate(value) {
+    if (value) {
       this.endDate = new Date(value);
-      if(this.startDate){
+      if (this.startDate) {
         this._duration = this.days();
-      } else if(this.duration){
+      } else if (this.duration) {
         this.startDate = new Date(this.endDate.getTime() - this._duration * 86400000);
       }
     } else {
       this.endDate = null;
-      if(this.startDate){
+      if (this.startDate) {
         this._duration = undefined;
       }
     }
@@ -80,7 +80,7 @@ export class DateComponent implements OnInit{
     }
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this._duration = this.days();
   }
 }

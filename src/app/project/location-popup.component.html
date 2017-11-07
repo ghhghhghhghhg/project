@@ -6,7 +6,9 @@
         <td><h6>Country<span style="color: red">*</span></h6></td>
       </tr>
       <tr>
-        <td><combo-box-app (selectedId)="exportCountryId($event)" [listObj]="countriesList"></combo-box-app></td>
+        <td>
+          <combo-box-app (selectedId)="exportCountryId($event)" [listObj]="countriesList"></combo-box-app>
+        </td>
       </tr>
     </table>
   </div>
@@ -16,23 +18,25 @@
         <td><h6>District<span style="color: red">*</span></h6></td>
       </tr>
       <tr>
-        <td><combo-box-app (selectedId)="exportDistrictId($event)" [listObj]="districtsList" #dis></combo-box-app></td>
+        <td>
+          <combo-box-app (selectedId)="exportDistrictId($event)" [listObj]="districtsList" #dis></combo-box-app>
+        </td>
       </tr>
     </table>
   </div>
-<div>
-  <table class="code">
-    <tr>
-      <td><h6>%</h6></td>
-    </tr>
-    <tr>
-      <td><input type="number" [(ngModel)] = "percent"></td>
-    </tr>
-  </table>
-</div>
-<div class="code">
-  <button [disabled]="dis.selectedValue == -1" (click)="addLocation()">Add</button>
-  <button (click)="cancel()">Cancel</button>
-</div>
+  <div>
+    <table class="code">
+      <tr>
+        <td><h6>%</h6></td>
+      </tr>
+      <tr>
+        <td><input type="number" [(ngModel)]="percent"></td>
+      </tr>
+    </table>
+  </div>
+  <div class="code">
+    <button [disabled]="dis.selectedValue == -1" (click)="addLocation()">Add</button>
+    <button (click)="cancel()">Cancel</button>
+  </div>
 </div>
 <div id="bg" *ngIf="showPopUp"></div>
