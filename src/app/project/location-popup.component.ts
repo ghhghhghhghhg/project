@@ -100,22 +100,24 @@ export class LocationPopupComponent implements OnInit {
         this.editedLocation.country = classifierCountry;
         this.editedLocation.district = classifierDistrict;
       } else {
-        console.log(this.percent)
         this.locations.push(new ProjectLocation(classifierCountry, classifierDistrict, this.percent));
       }
-      this.closePopUp.emit(false);
+      this.countryId = -1;
+      console.log(this.countryId)
       this.districtsList = [];
-      this.percent = undefined;
       this.showPopUp = false;
       this.countrySelectedValue = -1;
       this.districtSelectedValue = -1;
       this.percent = undefined;
       this.isEdited = false;
+      this.closePopUp.emit(false);
     }
   }
 
   cancel() {
     this.closePopUp.emit(false);
+    this.countryId = -1;
+    this._districtId = -1;
     this.districtsList = [];
     this.showPopUp = false;
     this.countrySelectedValue = -1;
