@@ -1,7 +1,7 @@
 #pop {
   width: 250px;
   height: 350px;
-  z-index: 100;
+  z-index: 1100;
   padding: 10px 0 0 10px;
   position: fixed;
   top: 0;
@@ -20,7 +20,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 99;
+  z-index: 1099;
   background: rgba(0, 0, 0, .7);
   display: block;
 }
