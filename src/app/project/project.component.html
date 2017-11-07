@@ -72,13 +72,13 @@
         <tr>
           <td>
             <combo-box-app [listObj]="sectorsList" [selectedValue]="sectorSelectedId"
-                           (selectedId)="selectedId($event)"></combo-box-app>
+                           (selectedId)="selectedId($event)" #sec></combo-box-app>
           </td>
           <td>
             <input class="marg" type="number" [(ngModel)]="sectorPercent" [ngModelOptions]="{standalone: true}">
           </td>
           <td>
-            <button (click)="addSector()">Add</button>
+            <button [disabled]="sec.selectedValue == -1" (click)="addSector()">Add Sector</button>
           </td>
         </tr>
       </table>
@@ -88,7 +88,7 @@
       <locations-list-app [locations]="project.locations" (deletedLocation)="restoreLocation($event)" (editedLocation)="editLocation($event)"></locations-list-app>
     </div>
     <div class="code color">
-      <button (click)="openPopUp()">Add</button>
+      <button (click)="openPopUp()">Add Location</button>
     </div>
     <div>
       <location-popup-app (closePopUp)="closePopUp($event)" [locations]="project.locations"
