@@ -18,6 +18,9 @@ export class ProjectComponent implements OnInit {
   sectorsList: Classifier[] = [];
   sectorSelectedId: number = -1;
   sectorPercent: number;
+  countryid: number = -1;
+  districtId: number = -1;
+  locationPercent: number;
 
   constructor(private route: ActivatedRoute, @Inject('DataService') private dataService: DataService, private router: Router) {
   }
@@ -56,6 +59,9 @@ export class ProjectComponent implements OnInit {
 
   closePopUp(showPopUp: boolean) {
     this.showPopUp = false;
+    this.countryid = -1;
+    this.districtId = -1;
+    this.locationPercent = null;
   }
 
   getProjectById(value: number) {
@@ -167,6 +173,13 @@ export class ProjectComponent implements OnInit {
 
   restoreLocation(obj: ProjectLocation){
     this.project.locations = this.project.locations.filter(o => o.district.id != obj.district.id);
+  }
+
+  editLocation(obj: ProjectLocation){
+    this.countryid = obj.country.id;
+    this.districtId = obj.district.id;
+    this.locationPercent = obj.percent;
+    this.showPopUp = true;
   }
 
   ngOnInit() {

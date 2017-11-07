@@ -7,7 +7,7 @@
       </tr>
       <tr>
         <td>
-          <combo-box-app (selectedId)="exportCountryId($event)" [listObj]="countriesList"></combo-box-app>
+          <combo-box-app (selectedId)="exportCountryId($event)" [listObj]="countriesList" [selectedValue]="countryId"></combo-box-app>
         </td>
       </tr>
     </table>
@@ -19,7 +19,7 @@
       </tr>
       <tr>
         <td>
-          <combo-box-app (selectedId)="exportDistrictId($event)" [listObj]="districtsList" #dis></combo-box-app>
+          <combo-box-app (selectedId)="exportDistrictId($event)" [listObj]="districtsList" [selectedValue]="districtId" #dis></combo-box-app>
         </td>
       </tr>
     </table>

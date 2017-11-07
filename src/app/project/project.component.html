@@ -85,14 +85,14 @@
     </div>
     <hr>
     <div>
-      <locations-list-app [locations]="project.locations" (deletedLocation)="restoreLocation($event)"></locations-list-app>
+      <locations-list-app [locations]="project.locations" (deletedLocation)="restoreLocation($event)" (editedLocation)="editLocation($event)"></locations-list-app>
     </div>
     <div class="code color">
       <button (click)="openPopUp()">Add</button>
     </div>
     <div>
       <location-popup-app (closePopUp)="closePopUp($event)" [locations]="project.locations"
-                          [showPopUp]="showPopUp"></location-popup-app>
+                          [showPopUp]="showPopUp" [countryId]="countryid" [districtId]="districtId" [percent]="locationPercent"></location-popup-app>
     </div>
   </div>
   <div class="div-area"></div>

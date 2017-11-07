@@ -12,17 +12,53 @@ export class LocationPopupComponent implements OnInit {
   @Input() locations: ProjectLocation[];
   @Input() showPopUp: boolean;
   @Output() closePopUp = new EventEmitter<boolean>();
-  countrySelectedValue: number = -1;
-  districtSelectedValue: number = -1;
-  percent: number;
+  @Input() countryId: number;
+  @Input() countrySelectedValue: number = -1;
+  @Input() districtSelectedValue: number = -1;
+  @Input() percent: number;
+  private _districtId: number;
+  isEdited: boolean = false;
+  editedLocation: ProjectLocation = null;
   countriesList: Classifier[] = [];
   districtsList: Classifier[] = [];
+
+  get districtId(): number {
+    return this._districtId;
+  }
+
+  @Input()
+  set districtId(value: number) {
+    if (value != -1) {
+      this.dataService.getDistricts(this.countryId).subscribe(
+        data => {
+          this.districtsList = data;
+          for (let obj of this.locations) {
+            if (obj.district.id == value) {
+              continue;
+            }
+            this.districtsList = this.districtsList.filter(sec => sec.id != obj.district.id);
+          }
+        }
+      );
+      for(let obj of this.locations){
+        if (obj.district.id == value) {
+          this.editedLocation = obj;
+        }
+      }
+      this.isEdited = true;
+    }
+    this._districtId = value;
+    this.countrySelectedValue = this.countryId;
+    this.districtSelectedValue = this._districtId;
+  }
 
   constructor(@Inject('DataService') private dataService: DataService) {
   }
 
   exportCountryId(selectedId: number) {
-    this.countrySelectedValue = selectedId;
+    this.countryId = selectedId;
+    this.countrySelectedValue = this.countryId;
+    this._districtId = -1;
     this.dataService.getDistricts(selectedId).subscribe(
       data => {
         this.districtsList = data
@@ -38,7 +74,7 @@ export class LocationPopupComponent implements OnInit {
   }
 
   addLocation() {
-    let perc = 0;
+    let perc = this.editedLocation.percent?-this.editedLocation.percent:0;
     for (let obj of this.locations) {
       if (obj.percent) {
         perc += obj.percent;
@@ -50,7 +86,7 @@ export class LocationPopupComponent implements OnInit {
     }
     if (this.countrySelectedValue != -1 && this.districtSelectedValue != -1) {
       let classifierCountry = new Classifier(this.countrySelectedValue);
-      let classifierDistrict = this.districtSelectedValue === -1 ? new Classifier() : new Classifier(this.districtSelectedValue);
+      let classifierDistrict = new Classifier(this.districtSelectedValue);
       this.dataService.getCountry(this.countrySelectedValue).subscribe(
         data => {
           classifierCountry.name = data
@@ -59,7 +95,13 @@ export class LocationPopupComponent implements OnInit {
       this.dataService.getDistrict(this.districtSelectedValue).subscribe(
         data => classifierDistrict.name = data
       );
-      this.locations.push(new ProjectLocation(classifierCountry, classifierDistrict, this.percent));
+      if(this.isEdited) {
+        this.editedLocation.percent = this.percent;
+        this.editedLocation.country = classifierCountry;
+        this.editedLocation.district = classifierDistrict;
+      } else {
+        this.locations.push(new ProjectLocation(classifierCountry, classifierDistrict, this.percent));
+      }
       this.closePopUp.emit(false);
       this.districtsList = [];
       this.percent = undefined;
@@ -67,6 +109,7 @@ export class LocationPopupComponent implements OnInit {
       this.countrySelectedValue = -1;
       this.districtSelectedValue = -1;
       this.percent = undefined;
+      this.isEdited = false;
     }
   }
 

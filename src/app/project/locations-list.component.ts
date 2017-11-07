@@ -13,9 +13,14 @@ export class LocationsListComponent {
 
   @Input() locations: ProjectLocation[];
   @Output() deletedLocation = new EventEmitter<ProjectLocation>();
+  @Output() editedLocation = new EventEmitter<ProjectLocation>();
 
   deleteLocation(obj: ProjectLocation) {
     this.deletedLocation.emit(obj);
+  }
+
+  editLocation(obj: ProjectLocation){
+    this.editedLocation.emit(obj);
   }
 
   sortASC(by: string) {

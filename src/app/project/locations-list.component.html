@@ -13,6 +13,7 @@
       </td>
       <td width="20px"><h6>%</h6></td>
       <td width="20px"><h6>Delete Location</h6></td>
+      <td width="20px"><h6>Edit Location</h6></td>
     </tr>
     </thead>
     <tbody>
@@ -20,6 +21,11 @@
       <td>{{o.country.name}}</td>
       <td>{{o.district.name}}</td>
       <td>{{o.percent}}</td>
+      <td class="bt" title="Edit this location">
+        <button type="button" class="btn btn-default btn-sm " (click)="editLocation(o)">
+          <span class="glyphicon glyphicon-pencil"></span> Edit
+        </button>
+      </td>
       <td class="bt" title="Delete this location">
         <button type="button" class="btn btn-default btn-sm" (click)="deleteLocation(o)">
           <span class="glyphicon glyphicon-remove"></span> Remove
