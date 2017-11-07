@@ -52,7 +52,7 @@
           <tr>
             <td>
               <combo-box-app [listObj]="implementationStatusesList" [selectedValue]="project.implementationStatusId"
-                             (selectedId)="ImplStatuseSelectedId($event)" #impl></combo-box-app>
+                             (selectedId)="implStatuseSelectedId($event)" #impl></combo-box-app>
             </td>
           </tr>
         </table>
@@ -61,7 +61,7 @@
     </div>
     <hr>
     <div>
-      <sectors-list-app [sectors]="project.sectors"></sectors-list-app>
+      <sectors-list-app [sectors]="project.sectors" (deletedSector)="restoreSector($event)"></sectors-list-app>
     </div>
     <div class="color">
       <table class="sector">

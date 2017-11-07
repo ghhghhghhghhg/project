@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, ViewChild} from "@angular/core";
+import {Component, Inject, OnInit} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Classifier} from "../shared/model/classifier";
 import {Project} from "../shared/model/project";
@@ -155,8 +155,13 @@ export class ProjectComponent implements OnInit {
     this.router.navigate([this.redirectUrl]);
   }
 
-  ImplStatuseSelectedId(value: number) {
+  implStatuseSelectedId(value: number) {
     this.project.implementationStatusId = value;
+  }
+
+  restoreSector(obj: ProjectSector) {
+    this.sectorsList.push(obj.sector);
+    this.project.sectors = this.project.sectors.filter(o => o.sector.id != obj.sector.id);
   }
 
   ngOnInit() {
@@ -177,7 +182,7 @@ export class ProjectComponent implements OnInit {
     });
   }
 
-  public isValid(): boolean{
+  public isValid(): boolean {
     return this.project.startDate && this.project.implementationStatusId != -1 && this.form.valid;
   }
 }

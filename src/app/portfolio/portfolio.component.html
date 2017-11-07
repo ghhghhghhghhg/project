@@ -16,11 +16,11 @@
       <td class="index" title="{{o.description}}">{{ind + 1}}</td>
       <td class="code" title="{{o.description}}">{{o.code}}</td>
       <td title="{{o.description}}">{{o.title}}</td>
-      <td class="bt" title="Edit this project">
+      <td class="bt" title="Edit project by ID: {{o.id}}">
         <button type="button" class="btn btn-default btn-sm " (click)="editProject(o.id)">
         <span class="glyphicon glyphicon-pencil"></span> Edit
       </button></td>
-      <td class="bt" title="Delete this project">
+      <td class="bt" title="Delete project by ID: {{o.id}}">
         <button type="button" class="btn btn-default btn-sm" (click)="deleteProject(o.id)">
         <span class="glyphicon glyphicon-remove"></span> Remove
       </button></td>
