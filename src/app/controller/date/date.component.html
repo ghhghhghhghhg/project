@@ -5,10 +5,18 @@
     <td><h6>Duration</h6></td>
   </tr>
   <tr>
-    <td><input type="date" [ngModel]="startDate | date: 'yyyy-MM-dd'" (change)="changeStartDate($event.target.value)">
+    <td><label>
+      <input type="date" [ngModel]="startDate | date: 'yyyy-MM-dd'" (change)="changeStartDate($event)">
+    </label>
     </td>
-    <td><input type="date" [ngModel]="endDate | date: 'yyyy-MM-dd'" (change)="changeEndDate($event.target.value)"></td>
-    <td><input type="number" [(ngModel)]="duration" (change)="setendDate($event.target.value)"></td>
+    <td><label>
+      <input type="date" [ngModel]="endDate | date: 'yyyy-MM-dd'" (change)="changeEndDate($event)">
+    </label></td>
+    <td>
+      <label>
+        <input type="number" [(ngModel)]="duration" min="1" (change)="generateDates()">
+      </label>
+    </td>
   </tr>
 </table>
 

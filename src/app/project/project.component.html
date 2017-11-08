@@ -92,7 +92,7 @@
       <button (click)="openPopUp()">Add Location</button>
     </div>
     <div>
-      <location-popup-app (closePopUp)="closePopUp($event)" [locations]="project.locations"
+      <location-popup-app (closePopUp)="closePopUp()" [locations]="project.locations" [isEdited] = "isEditedLocation"
                           [showPopUp]="showPopUp" [countryId]="countryid" [districtId]="districtId" [percent]="locationPercent"></location-popup-app>
     </div>
   </div>

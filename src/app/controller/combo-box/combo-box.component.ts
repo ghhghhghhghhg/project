@@ -15,6 +15,10 @@ export class ComboBoxComponent {
   @Input() selectedValue: number = -1;
   @Output() selectedId = new EventEmitter<number>();
 
+  /**
+   * Emit id of selectedValue
+   * @param {number} value
+   */
   exportId(value: number) {
     this.selectedId.emit(value);
   }

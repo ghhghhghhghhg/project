@@ -10,12 +10,15 @@ import {DataService} from "../shared/services/api/data.service";
 })
 export class PortfolioComponent implements OnInit {
 
+  projectsPreview: Project[] = [];
+
   constructor(private router: Router, @Inject("DataService") private dataService: DataService) {
   }
 
-  projectsPreview: Project[] = []
-
-  getProjects() {
+  /**
+   * Initialization projects table
+   */
+  initProjects() {
     this.dataService.getProjects()
       .subscribe(data =>
           this.projectsPreview = data,
@@ -25,6 +28,10 @@ export class PortfolioComponent implements OnInit {
       );
   }
 
+  /**
+   * Delite project with project ID
+   * @param {number} value
+   */
   deleteProject(value: number) {
     this.dataService.deleteProject(value).subscribe(
       data => {
@@ -36,16 +43,22 @@ export class PortfolioComponent implements OnInit {
 
   }
 
+  /**
+   * Edit project with project ID
+   * @param {number} value
+   */
   editProject(value: number) {
     this.router.navigate(['/projects', value]);
   }
 
+  /**
+   * Redirect with "add-project" page
+   */
   redirect() {
     this.router.navigate(['/add-project']);
   }
 
   ngOnInit() {
-    this.getProjects();
+    this.initProjects();
   }
-
 }

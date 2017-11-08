@@ -13,8 +13,8 @@
       <th>Edit</th>
       <th>Delete</th>
     </tr>
-    <tr *ngFor="let o of projectsPreview; let ind = index">
-      <td class="index" title="{{o.description}}">{{ind + 1}}</td>
+    <tr *ngFor="let o of projectsPreview; let index = index">
+      <td class="index" title="{{o.description}}">{{index + 1}}</td>
       <td class="code" title="{{o.description}}">{{o.code}}</td>
       <td title="{{o.description}}">{{o.title}}</td>
       <td class="bt" title="Edit project by ID: {{o.id}}">

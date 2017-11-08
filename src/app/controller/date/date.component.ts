@@ -7,12 +7,17 @@ import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 })
 export class DateComponent implements OnInit {
 
+  private ONE_DAY_MILLISECONDS: number = 86400000;
+
   private _duration: number;
 
   @Input() startDate: Date;
   @Input() endDate: Date;
   @Output() startDateChange = new EventEmitter<Date>();
   @Output() endDateChange = new EventEmitter<Date>();
+
+  constructor() {
+  }
 
   get duration(): number {
     return this._duration;
@@ -22,39 +27,49 @@ export class DateComponent implements OnInit {
     this._duration = value;
   }
 
-  setendDate(value: number) {
+  /**
+   * Generate StartDate and EndDate with duration
+   */
+  generateDates() {
     if (this.startDate) {
-      this.endDate = new Date(this.startDate.getTime() + this._duration * 86400000);
+      this.endDate = new Date(this.startDate.getTime() + this._duration * this.ONE_DAY_MILLISECONDS);
     } else if (this.endDate) {
-      this.startDate = new Date(this.endDate.getTime() - this._duration * 86400000);
+      this.startDate = new Date(this.endDate.getTime() - this._duration * this.ONE_DAY_MILLISECONDS);
     }
   }
 
-  changeStartDate(value) {
-    if (value) {
-      this.startDate = new Date(value);
+  /**
+   * On change StartDate generate duration or EndDate
+   * @param event
+   */
+  changeStartDate(event) {
+    if (event.target.value) {
+      this.startDate = new Date(event.target.value);
       if (this.endDate) {
-        this._duration = this.days();
+        this._duration = this.durationOfDays();
       } else if (this._duration) {
-        this.endDate = new Date(this.startDate.getTime() + this._duration * 86400000);
+        this.endDate = new Date(this.startDate.getTime() + this._duration * this.ONE_DAY_MILLISECONDS);
       }
     } else {
       this.startDate = null;
       if (this.endDate) {
-        this._duration = undefined;
+        this._duration = null;
       }
     }
-
     this.startDateChange.emit(this.startDate);
   }
 
-  changeEndDate(value) {
-    if (value) {
-      this.endDate = new Date(value);
+  /**
+   * On change EndDate generate duration or StartDate
+   * @param event
+   */
+  changeEndDate(event) {
+    if (event.target.value) {
+      this.endDate = new Date(event.target.value);
       if (this.startDate) {
-        this._duration = this.days();
+        this._duration = this.durationOfDays();
       } else if (this.duration) {
-        this.startDate = new Date(this.endDate.getTime() - this._duration * 86400000);
+        this.startDate = new Date(this.endDate.getTime() - this._duration * this.ONE_DAY_MILLISECONDS);
       }
     } else {
       this.endDate = null;
@@ -65,7 +80,11 @@ export class DateComponent implements OnInit {
     this.endDateChange.emit(this.endDate);
   }
 
-  days(): number {
+  /**
+   * Generate Duration of StartDate and EndDate
+   * @returns {number}
+   */
+  durationOfDays(): number {
     if (!this.startDate || !this.endDate) {
       return undefined;
     }
@@ -75,12 +94,12 @@ export class DateComponent implements OnInit {
       this.endDate = null;
       return undefined;
     } else {
-      timeDiff /= 86400000;
+      timeDiff /= this.ONE_DAY_MILLISECONDS;
       return Math.ceil(timeDiff);
     }
   }
 
   ngOnInit() {
-    this._duration = this.days();
+    this._duration = this.durationOfDays();
   }
 }

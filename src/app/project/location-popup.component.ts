@@ -9,72 +9,128 @@ import {Classifier} from "../shared/model/classifier";
   styleUrls: ['./location-popup.component.css']
 })
 export class LocationPopupComponent implements OnInit {
+
   @Input() locations: ProjectLocation[];
   @Input() showPopUp: boolean;
-  @Output() closePopUp = new EventEmitter<boolean>();
+  @Output() closePopUp = new EventEmitter();
   @Input() countryId: number;
-  @Input() countrySelectedValue: number = -1;
-  @Input() districtSelectedValue: number = -1;
   @Input() percent: number;
   private _districtId: number;
-  isEdited: boolean = false;
+  @Input() isEdited: boolean;
   editedLocation: ProjectLocation = null;
   countriesList: Classifier[] = [];
   districtsList: Classifier[] = [];
+
+  constructor(@Inject('DataService') private dataService: DataService) {
+  }
 
   get districtId(): number {
     return this._districtId;
   }
 
+  /**
+   * Set district ID and if location is edited initialize district list by selected country ID
+   * @param {number} value
+   */
   @Input()
   set districtId(value: number) {
-    if (value != -1) {
-      this.dataService.getDistricts(this.countryId).subscribe(
-        data => {
-          this.districtsList = data;
-          for (let obj of this.locations) {
-            if (obj.district.id == value) {
-              continue;
-            }
-            this.districtsList = this.districtsList.filter(sec => sec.id != obj.district.id);
-          }
-        }
-      );
+    if (this.isEdited) {
       for (let obj of this.locations) {
         if (obj.district.id == value) {
           this.editedLocation = obj;
         }
       }
-      this.isEdited = true;
+      this.initDistricts();
     }
     this._districtId = value;
-    this.countrySelectedValue = this.countryId;
-    this.districtSelectedValue = this._districtId;
   }
 
-  constructor(@Inject('DataService') private dataService: DataService) {
-  }
-
-  exportCountryId(selectedId: number) {
-    this.countryId = selectedId;
-    this.countrySelectedValue = this.countryId;
-    this._districtId = -1;
-    this.dataService.getDistricts(selectedId).subscribe(
+  /**
+   * After country select initialize district list by selected country ID
+   * @param {number} value
+   */
+  initDistricts() {
+    this.dataService.getDistricts(this.countryId).subscribe(
       data => {
-        this.districtsList = data
+        this.districtsList = data;
         for (let obj of this.locations) {
-          this.districtsList = this.districtsList.filter(sec => sec.id != obj.district.id);
+          if (this.isEdited && obj.district.id == this.editedLocation.district.id) {
+            continue;
+          }
+          this.districtsList = this.districtsList.filter(district => district.id != obj.district.id);
         }
       }
     );
   }
 
-  exportDistrictId(selectedId: number) {
-    this.districtSelectedValue = selectedId;
+  /**
+   * After change country ID reinitialize districts list
+   * @param {number} selectedId
+   */
+  changeCountryId(selectedId: number) {
+    this.countryId = selectedId;
+    this.resetDistricts();
+    this.initDistricts();
   }
 
+  /**
+   * Reset districts list
+   */
+  resetDistricts() {
+    this._districtId = -1;
+  }
+
+  /**
+   * After select district set ditrictId selected ID
+   * @param {number} selectedId
+   */
+  changeDistrictId(selectedId: number) {
+    this._districtId = selectedId;
+  }
+
+  /**
+   * If inserted values is valid add new location or if edited change edit location
+   */
   addLocation() {
-    let perc = this.editedLocation? this.editedLocation.percent? -this.editedLocation.percent: 0: 0;
+    if(!this.isValid()){
+      return;
+    }
+    //TODO in combo-box change Id to classifier
+    let classifierCountry = new Classifier(this.countryId);
+    let classifierDistrict = new Classifier(this.districtId);
+    this.dataService.getCountry(this.countryId).subscribe(
+      data => {
+        classifierCountry.name = data
+      }
+    );
+    this.dataService.getDistrict(this.districtId).subscribe(
+      data => classifierDistrict.name = data
+    );
+
+    if (this.isEdited) {
+      this.editedLocation.percent = this.percent;
+      this.editedLocation.country = classifierCountry;
+      this.editedLocation.district = classifierDistrict;
+    } else {
+      this.locations.push(new ProjectLocation(classifierCountry, classifierDistrict, this.percent));
+    }
+    this.resetPopup();
+  }
+
+  /**
+   * Return inserted values is valid
+   * @returns {boolean}
+   */
+  isValid(): boolean{
+    return this.isValidPercent() && this.countryId != -1 && this.districtId != -1;
+  }
+
+  /**
+   * Return inserted percent value is valid
+   * @returns {boolean}
+   */
+  isValidPercent(): boolean{
+    let perc = this.isEdited ? this.editedLocation.percent ? - this.editedLocation.percent : 0 : 0;
     for (let obj of this.locations) {
       if (obj.percent) {
         perc += obj.percent;
@@ -82,54 +138,33 @@ export class LocationPopupComponent implements OnInit {
     }
     if (this.percent && perc + this.percent > 100) {
       alert(`Please correct percent it mast be <= ${100 - perc}`);
-      return;
+      return false;
     }
-    if (this.countrySelectedValue != -1 && this.districtSelectedValue != -1) {
-      let classifierCountry = new Classifier(this.countrySelectedValue);
-      let classifierDistrict = new Classifier(this.districtSelectedValue);
-      this.dataService.getCountry(this.countrySelectedValue).subscribe(
-        data => {
-          classifierCountry.name = data
-        }
-      );
-      this.dataService.getDistrict(this.districtSelectedValue).subscribe(
-        data => classifierDistrict.name = data
-      );
-      if (this.isEdited) {
-        this.editedLocation.percent = this.percent;
-        this.editedLocation.country = classifierCountry;
-        this.editedLocation.district = classifierDistrict;
-      } else {
-        this.locations.push(new ProjectLocation(classifierCountry, classifierDistrict, this.percent));
-      }
-      this.countryId = -1;
-      this.districtsList = [];
-      this.showPopUp = false;
-      this.countrySelectedValue = -1;
-      this.districtSelectedValue = -1;
-      this.percent = undefined;
-      this.isEdited = false;
-      this.closePopUp.emit(false);
-    }
+    return true;
   }
 
-  cancel() {
-    this.closePopUp.emit(false);
+  /**
+   * Reset popup values
+   */
+  resetPopup(){
+    this.closePopUp.emit();
     this.countryId = -1;
     this._districtId = -1;
     this.districtsList = [];
     this.showPopUp = false;
-    this.countrySelectedValue = -1;
-    this.districtSelectedValue = -1;
+    this.isEdited = false;
   }
 
-  districtsListInitByCountryId(id: number) {
-    this.dataService.getDistricts(id).subscribe(
-      data =>
-        this.districtsList = data
-    );
+  /**
+   * Close popup and reset values
+   */
+  cancel() {
+    this.resetPopup();
   }
 
+  /**
+   * Initialize countries list
+   */
   countrieslistInit() {
     this.dataService.getCountries().subscribe(
       data =>

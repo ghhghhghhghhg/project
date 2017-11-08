@@ -7,7 +7,8 @@
       </tr>
       <tr>
         <td>
-          <combo-box-app (selectedId)="exportCountryId($event)" [listObj]="countriesList" [selectedValue]="countryId"></combo-box-app>
+          <combo-box-app (selectedId)="changeCountryId($event)" [listObj]="countriesList"
+                         [selectedValue]="countryId"></combo-box-app>
         </td>
       </tr>
     </table>
@@ -19,7 +20,8 @@
       </tr>
       <tr>
         <td>
-          <combo-box-app (selectedId)="exportDistrictId($event)" [listObj]="districtsList" [selectedValue]="districtId" #dis></combo-box-app>
+          <combo-box-app (selectedId)="changeDistrictId($event)" [listObj]="districtsList" [selectedValue]="districtId"
+                         #district></combo-box-app>
         </td>
       </tr>
     </table>
@@ -30,12 +32,16 @@
         <td><h6>%</h6></td>
       </tr>
       <tr>
-        <td><input type="number" [(ngModel)]="percent" max="100" min="0"></td>
+        <td>
+          <label>
+            <input type="number" [(ngModel)]="percent" max="100" min="0">
+          </label>
+        </td>
       </tr>
     </table>
   </div>
   <div class="code">
-    <button [disabled]="dis.selectedValue == -1" (click)="addLocation()">Add</button>
+    <button [disabled]="district.selectedValue == -1" (click)="addLocation()">Add</button>
     <button (click)="cancel()">Cancel</button>
   </div>
 </div>

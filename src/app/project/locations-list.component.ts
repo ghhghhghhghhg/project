@@ -10,19 +10,30 @@ export class LocationsListComponent {
 
   sortField: string = "country";
   isSortSectorListByDESC: boolean = false;
-
   @Input() locations: ProjectLocation[];
   @Output() deletedLocation = new EventEmitter<ProjectLocation>();
   @Output() editedLocation = new EventEmitter<ProjectLocation>();
 
+  /**
+   * Delete location
+   * @param {ProjectLocation} obj
+   */
   deleteLocation(obj: ProjectLocation) {
     this.deletedLocation.emit(obj);
   }
 
+  /**
+   * Edit location
+   * @param {ProjectLocation} obj
+   */
   editLocation(obj: ProjectLocation){
     this.editedLocation.emit(obj);
   }
 
+  /**
+   * Sort location by country or district name ASC
+   * @param {string} by
+   */
   sortASC(by: string) {
     if (by == "country") {
       this.sortField = by;
@@ -32,6 +43,10 @@ export class LocationsListComponent {
     this.isSortSectorListByDESC = false;
   }
 
+  /**
+   * Sort location by country or district name DESC
+   * @param {string} by
+   */
   sortDESC(by: string) {
     if (by == "country") {
       this.sortField = by;

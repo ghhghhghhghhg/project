@@ -1,4 +1,6 @@
-<select [(ngModel)]="selectedValue" (change)="exportId(selectedValue)">
-  <option value="-1">---Select---</option>
-  <option *ngFor="let o of listObj" [value]="o.id">{{o.name}}</option>
-</select>
+<label>
+  <select [(ngModel)]="selectedValue" (change)="exportId(selectedValue)">
+    <option value="-1">---Select---</option>
+    <option *ngFor="let o of listObj" [value]="o.id">{{o.name}}</option>
+  </select>
+</label>

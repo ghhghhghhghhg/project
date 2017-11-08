@@ -4,6 +4,14 @@ import {Pipe} from "@angular/core";
   name: "sort"
 })
 export class SortPipe {
+
+  /**
+   * Sort Arrays of Object who have Classifier field
+   * @param {any[]} array
+   * @param {string} field
+   * @param {boolean} desc
+   * @returns {any[]}
+   */
   transform(array: any[], field: string, desc: boolean = false): any[] {
     setTimeout(() => {
       array.sort((a: any, b: any) => {
@@ -28,4 +36,5 @@ export class SortPipe {
     });
     return array;
   }
+
 }

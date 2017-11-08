@@ -27,6 +27,7 @@ export class ProjectComponent implements OnInit {
 
   info: string;
   showPopUp: boolean = false;
+  isEditedLocation: boolean = false;
   redirectUrl: string = '/projects';
   project: Project;
 
@@ -45,7 +46,7 @@ export class ProjectComponent implements OnInit {
       let classifier = new Classifier(this.sectorSelectedId);
       this.dataService.getSector(this.sectorSelectedId).subscribe(
         data => classifier.name = data
-      )
+      );
       this.project.sectors.push(new ProjectSector(classifier, this.sectorPercent));
       this.sectorsList = this.sectorsList.filter(sec => sec.id != this.sectorSelectedId);
       this.sectorSelectedId = -1;
@@ -55,13 +56,15 @@ export class ProjectComponent implements OnInit {
 
   openPopUp() {
     this.showPopUp = true;
+    this.isEditedLocation = false;
   }
 
-  closePopUp(showPopUp: boolean) {
+  closePopUp() {
     this.showPopUp = false;
     this.countryid = -1;
     this.districtId = -1;
     this.locationPercent = null;
+    this.isEditedLocation = false;
   }
 
   getProjectById(value: number) {
@@ -83,7 +86,7 @@ export class ProjectComponent implements OnInit {
           for (let obj of this.project.locations) {
             this.dataService.getCountry(obj.country.id).subscribe(
               data => obj.country.name = data
-            )
+            );
             this.dataService.getDistrict(obj.district.id).subscribe(
               data => obj.district.name = data
             )
@@ -112,11 +115,14 @@ export class ProjectComponent implements OnInit {
     );
   }
 
+  genModifyInformation() {
+    this.project.modifyDate = new Date();
+    this.project.modifyUser = "User";
+  }
+
   projectEvent(value: number) {
     if (value == 1) {
-      let date: Date = new Date();
-      this.project.modifyDate = date;
-      this.project.modifyUser = "User"
+      this.genModifyInformation();
       if (this.project.id) {
         this.dataService.putProject(this.project).subscribe()
       } else {
@@ -128,9 +134,7 @@ export class ProjectComponent implements OnInit {
       }
     }
     if (value == 2) {
-      let date: Date = new Date();
-      this.project.modifyDate = date;
-      this.project.modifyUser = "User"
+      this.genModifyInformation();
       if (this.project.id) {
         this.dataService.putProject(this.project).subscribe(
           data => {
@@ -171,15 +175,16 @@ export class ProjectComponent implements OnInit {
     this.project.sectors = this.project.sectors.filter(o => o.sector.id != obj.sector.id);
   }
 
-  restoreLocation(obj: ProjectLocation){
+  restoreLocation(obj: ProjectLocation) {
     this.project.locations = this.project.locations.filter(o => o.district.id != obj.district.id);
   }
 
-  editLocation(obj: ProjectLocation){
+  editLocation(obj: ProjectLocation) {
     this.countryid = obj.country.id;
     this.districtId = obj.district.id;
     this.locationPercent = obj.percent;
     this.showPopUp = true;
+    this.isEditedLocation = true;
   }
 
   ngOnInit() {

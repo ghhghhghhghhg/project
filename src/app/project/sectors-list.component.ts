@@ -12,14 +12,26 @@ export class SectorsListComponent{
   @Input() sectors: ProjectSector[] = [];
   @Output() deletedSector = new EventEmitter<ProjectSector>();
 
+  /**
+   * Delete sector
+   * @param {ProjectSector} projectSector
+   */
   deleteSector(projectSector: ProjectSector){
     this.deletedSector.emit(projectSector);
   }
 
+  /**
+   * Sort sectors by sector name ASC
+   * @constructor
+   */
   SortASC(){
     this.isSortSectorListByDESC = false;
   }
 
+  /**
+   * Sort sectors by sector name DESC
+   * @constructor
+   */
   SortDESC(){
     this.isSortSectorListByDESC = true;
   }
