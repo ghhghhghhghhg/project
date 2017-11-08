@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 
 @Component({
-  selector: "date-app",
+  selector: "sis-date",
   templateUrl: "./date.component.html",
   styleUrls: ["./date.component.css"]
 })
@@ -30,7 +30,7 @@ export class DateComponent implements OnInit {
   /**
    * Generate StartDate and EndDate with duration
    */
-  generateDates() {
+  generateDates(): void {
     if (this.startDate) {
       this.endDate = new Date(this.startDate.getTime() + this._duration * this.ONE_DAY_MILLISECONDS);
     } else if (this.endDate) {
@@ -42,7 +42,7 @@ export class DateComponent implements OnInit {
    * On change StartDate generate duration or EndDate
    * @param event
    */
-  changeStartDate(event) {
+  changeStartDate(event): void {
     if (event.target.value) {
       this.startDate = new Date(event.target.value);
       if (this.endDate) {
@@ -63,7 +63,7 @@ export class DateComponent implements OnInit {
    * On change EndDate generate duration or StartDate
    * @param event
    */
-  changeEndDate(event) {
+  changeEndDate(event): void {
     if (event.target.value) {
       this.endDate = new Date(event.target.value);
       if (this.startDate) {

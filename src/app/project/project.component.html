@@ -5,12 +5,12 @@
         <span *ngIf="project.code && project.title" class="header-a">{{project.code}} - {{project.title}}</span>
         <div class="div">
           <button [disabled]="!form.valid || !date.startDate || impl.selectedValue == -1" type="button"
-                  class="save btn-success" (click)="projectEvent(1)">SAVE
+                  class="save btn-success" (click)="saveProject()">SAVE
           </button>
           <button [disabled]="!form.valid || !date.startDate || impl.selectedValue == -1" type="button"
-                  class="save btn-primary" (click)="projectEvent(2)">SAVE&CLOSE
+                  class="save btn-primary" (click)="saveAndCloseProject()">SAVE&CLOSE
           </button>
-          <button class="save btn-danger" type="button" (click)="projectEvent(3)">CANCEL</button>
+          <button class="save btn-danger" type="button" (click)="cancel()">CANCEL</button>
         </div>
         <h6 *ngIf="project.modifyUser && project.modifyDate" class="h6">Last Modified by {{project.modifyUser}} on
           {{project.modifyDate | date : 'short'}}</h6>
@@ -52,17 +52,17 @@
           </tr>
           <tr>
             <td>
-              <combo-box-app [listObj]="implementationStatusesList" [selectedValue]="project.implementationStatusId"
-                             (selectedId)="implStatuseSelectedId($event)" #impl></combo-box-app>
+              <sis-combo-box [listObj]="implementationStatusesList" [selectedValue]="project.implementationStatusId"
+                             (selectedId)="implStatuseSelectedId($event)" #impl></sis-combo-box>
             </td>
           </tr>
         </table>
-        <date-app [(startDate)]="project.startDate" [(endDate)]="project.endDate" #date></date-app>
+        <sis-date [(startDate)]="project.startDate" [(endDate)]="project.endDate" #date></sis-date>
       </div>
     </div>
     <hr>
     <div>
-      <sectors-list-app [sectors]="project.sectors" (deletedSector)="restoreSector($event)"></sectors-list-app>
+      <sis-sectors-list [sectors]="project.sectors" (deletedSector)="restoreSector($event)"></sis-sectors-list>
     </div>
     <div class="color">
       <table class="sector">
@@ -72,8 +72,8 @@
         </tr>
         <tr>
           <td>
-            <combo-box-app [listObj]="sectorsList" [selectedValue]="sectorSelectedId"
-                           (selectedId)="selectedId($event)" #sec></combo-box-app>
+            <sis-combo-box [listObj]="sectorsList" [selectedValue]="sectorSelectedId"
+                           (selectedId)="selectedId($event)" #sec></sis-combo-box>
           </td>
           <td>
             <input class="marg" type="number" [(ngModel)]="sectorPercent" [ngModelOptions]="{standalone: true}" max="100" min="0">
@@ -86,14 +86,14 @@
     </div>
     <hr>
     <div>
-      <locations-list-app [locations]="project.locations" (deletedLocation)="restoreLocation($event)" (editedLocation)="editLocation($event)"></locations-list-app>
+      <sis-locations-list [locations]="project.locations" (deletedLocation)="restoreLocation($event)" (editedLocation)="editLocation($event)"></sis-locations-list>
     </div>
     <div class="code color">
       <button (click)="openPopUp()">Add Location</button>
     </div>
     <div>
-      <location-popup-app (closePopUp)="closePopUp()" [locations]="project.locations" [isEdited] = "isEditedLocation"
-                          [showPopUp]="showPopUp" [countryId]="countryid" [districtId]="districtId" [percent]="locationPercent"></location-popup-app>
+      <sis-location-popup (closePopUp)="closePopUp()" [locations]="project.locations" [isEdited] = "isEditedLocation"
+                          [showPopUp]="showPopUp" [countryId]="countryid" [districtId]="districtId" [percent]="locationPercent"></sis-location-popup>
     </div>
   </div>
   <div class="div-area"></div>

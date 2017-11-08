@@ -2,11 +2,11 @@ import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {ProjectSector} from "../shared/model/project-sector";
 
 @Component({
-  selector: "sectors-list-app",
+  selector: "sis-sectors-list",
   templateUrl: "./sectors-list.component.html",
   styleUrls: ["./sectors-list.component.css"]
 })
-export class SectorsListComponent{
+export class SectorsListComponent {
 
   isSortSectorListByDESC: boolean = false;
   @Input() sectors: ProjectSector[] = [];
@@ -16,7 +16,7 @@ export class SectorsListComponent{
    * Delete sector
    * @param {ProjectSector} projectSector
    */
-  deleteSector(projectSector: ProjectSector){
+  deleteSector(projectSector: ProjectSector): void {
     this.deletedSector.emit(projectSector);
   }
 
@@ -24,7 +24,7 @@ export class SectorsListComponent{
    * Sort sectors by sector name ASC
    * @constructor
    */
-  SortASC(){
+  SortASC(): void {
     this.isSortSectorListByDESC = false;
   }
 
@@ -32,7 +32,7 @@ export class SectorsListComponent{
    * Sort sectors by sector name DESC
    * @constructor
    */
-  SortDESC(){
+  SortDESC(): void {
     this.isSortSectorListByDESC = true;
   }
 

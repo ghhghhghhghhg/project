@@ -4,7 +4,7 @@ import {Project} from "../shared/model/project";
 import {DataService} from "../shared/services/api/data.service";
 
 @Component({
-  selector: 'app-portfolio',
+  selector: 'sis-portfolio',
   templateUrl: './portfolio.component.html',
   styleUrls: ['./portfolio.component.css']
 })
@@ -47,14 +47,14 @@ export class PortfolioComponent implements OnInit {
    * Edit project with project ID
    * @param {number} value
    */
-  editProject(value: number) {
+  editProject(value: number): void {
     this.router.navigate(['/projects', value]);
   }
 
   /**
-   * Redirect with "add-project" page
+   * Navigate with "add-project" page
    */
-  redirect() {
+  redirect(): void {
     this.router.navigate(['/add-project']);
   }
 

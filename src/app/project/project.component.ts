@@ -31,7 +31,36 @@ export class ProjectComponent implements OnInit {
   redirectUrl: string = '/projects';
   project: Project;
 
-  addSector() {
+  /**
+   * Add sector if inserted values is valid
+   */
+  addSector(): void {
+    if (!this.isValid()) {
+      return;
+    }
+    let classifier = new Classifier(this.sectorSelectedId);
+    this.dataService.getSector(this.sectorSelectedId).subscribe(
+      data => classifier.name = data
+    );
+    this.project.sectors.push(new ProjectSector(classifier, this.sectorPercent));
+    this.sectorsList = this.sectorsList.filter(sectorSelected => sectorSelected.id != this.sectorSelectedId);
+    this.sectorSelectedId = -1;
+    this.sectorPercent = undefined;
+  }
+
+  /**
+   * Checked inserted sector values
+   * @returns {boolean}
+   */
+  isValid(): boolean {
+    return this.isValidPercent() && this.sectorSelectedId != -1
+  }
+
+  /**
+   * Cheked inserted sector perscent
+   * @returns {boolean}
+   */
+  isValidPercent(): boolean {
     let perc = 0;
     for (let obj of this.project.sectors) {
       if (obj.percent) {
@@ -40,26 +69,23 @@ export class ProjectComponent implements OnInit {
     }
     if (perc + this.sectorPercent > 100) {
       alert(`Please correct sector percent it mast be <= ${100 - perc}`);
-      return;
+      return false;
     }
-    if (this.sectorSelectedId !== -1) {
-      let classifier = new Classifier(this.sectorSelectedId);
-      this.dataService.getSector(this.sectorSelectedId).subscribe(
-        data => classifier.name = data
-      );
-      this.project.sectors.push(new ProjectSector(classifier, this.sectorPercent));
-      this.sectorsList = this.sectorsList.filter(sec => sec.id != this.sectorSelectedId);
-      this.sectorSelectedId = -1;
-      this.sectorPercent = undefined;
-    }
+    return true;
   }
 
-  openPopUp() {
+  /**
+   * Open popup
+   */
+  openPopUp(): void {
     this.showPopUp = true;
     this.isEditedLocation = false;
   }
 
-  closePopUp() {
+  /**
+   * Close popup
+   */
+  closePopUp(): void {
     this.showPopUp = false;
     this.countryid = -1;
     this.districtId = -1;
@@ -67,31 +93,17 @@ export class ProjectComponent implements OnInit {
     this.isEditedLocation = false;
   }
 
-  getProjectById(value: number) {
+  /**
+   * Get edited project date
+   * @param {number} value
+   */
+  getProjectById(value: number): void {
     this.dataService.getProject(value).subscribe(
       data => {
         this.project = data;
         this.info = `Edited project by ID:${this.project.id}`;
-        if (this.project.sectors) {
-          for (let obj of this.project.sectors) {
-            this.dataService.getSector(obj.sector.id).subscribe(
-              data => {
-                obj.sector.name = data;
-                this.sectorsList = this.sectorsList.filter(sec => sec.name != data);
-              }
-            )
-          }
-        }
-        if (this.project.locations) {
-          for (let obj of this.project.locations) {
-            this.dataService.getCountry(obj.country.id).subscribe(
-              data => obj.country.name = data
-            );
-            this.dataService.getDistrict(obj.district.id).subscribe(
-              data => obj.district.name = data
-            )
-          }
-        }
+        this.initProjectSectorsName();
+        this.initLocationsCountriesAndDistrictsName();
       },
       (err: any) => {
         console.log(err);
@@ -99,7 +111,42 @@ export class ProjectComponent implements OnInit {
     )
   }
 
-  getImplementationStatusesList() {
+  /**
+   * Initialize sectors name
+   */
+  initProjectSectorsName(): void {
+    if (this.project.sectors) {
+      for (let obj of this.project.sectors) {
+        this.dataService.getSector(obj.sector.id).subscribe(
+          data => {
+            obj.sector.name = data;
+            this.sectorsList = this.sectorsList.filter(sec => sec.name != data);
+          }
+        )
+      }
+    }
+  }
+
+  /**
+   * Initialize countries and districts name
+   */
+  initLocationsCountriesAndDistrictsName(): void {
+    if (this.project.locations) {
+      for (let obj of this.project.locations) {
+        this.dataService.getCountry(obj.country.id).subscribe(
+          data => obj.country.name = data
+        );
+        this.dataService.getDistrict(obj.district.id).subscribe(
+          data => obj.district.name = data
+        )
+      }
+    }
+  }
+
+  /**
+   * Initialize implementation statuses list
+   */
+  initImplementationStatusesList(): void {
     this.dataService.getImplementationStatuses().subscribe(
       data => {
         this.implementationStatusesList = data;
@@ -107,7 +154,10 @@ export class ProjectComponent implements OnInit {
     );
   }
 
-  getSectorsList() {
+  /**
+   * Initialize sectors list
+   */
+  initSectorsList(): void {
     this.dataService.getSectors().subscribe(
       data => {
         this.sectorsList = data;
@@ -115,71 +165,106 @@ export class ProjectComponent implements OnInit {
     );
   }
 
+  /**
+   * Generate modify information
+   */
   genModifyInformation() {
     this.project.modifyDate = new Date();
     this.project.modifyUser = "User";
   }
 
-  projectEvent(value: number) {
-    if (value == 1) {
-      this.genModifyInformation();
-      if (this.project.id) {
-        this.dataService.putProject(this.project).subscribe()
-      } else {
-        this.dataService.postProject(this.project).subscribe(
-          data => {
-            this.project.id = data.id;
-          }
-        )
-      }
-    }
-    if (value == 2) {
-      this.genModifyInformation();
-      if (this.project.id) {
-        this.dataService.putProject(this.project).subscribe(
-          data => {
-            if (data.success) {
-              this.redirect();
-            }
-          }
-        )
-      } else {
-        this.dataService.postProject(this.project).subscribe(
-          data => {
-            if (data.success) {
-              this.redirect();
-            }
-          }
-        )
-      }
-    }
-    if (value == 3) {
-      this.redirect();
+  /**
+   * Save project
+   */
+  saveProject(): void {
+    this.genModifyInformation();
+    if (this.project.id) {
+      this.dataService.putProject(this.project).subscribe()
+    } else {
+      this.dataService.postProject(this.project).subscribe(
+        data => {
+          this.project.id = data.id;
+        }
+      )
     }
   }
 
-  selectedId(value: number) {
+  /**
+   * Save project and navigate to portfolio page
+   */
+  saveAndCloseProject(): void {
+    this.genModifyInformation();
+    if (this.project.id) {
+      this.dataService.putProject(this.project).subscribe(
+        data => {
+          if (data.success) {
+            this.redirect();
+          }
+        }
+      )
+    } else {
+      this.dataService.postProject(this.project).subscribe(
+        data => {
+          if (data.success) {
+            this.redirect();
+          }
+        }
+      )
+    }
+  }
+
+  /**
+   * Cancel
+   */
+  cancel(): void {
+    this.redirect();
+  }
+
+  /**
+   * Set sector selected ID
+   * @param {number} value
+   */
+  selectedId(value: number): void {
     this.sectorSelectedId = value;
   }
 
-  redirect() {
+  /**
+   * Navigate to portfolio page
+   */
+  redirect(): void {
     this.router.navigate([this.redirectUrl]);
   }
 
-  implStatuseSelectedId(value: number) {
+  /**
+   * Set implimentation status selected ID
+   * @param {number} value
+   */
+  implStatuseSelectedId(value: number): void {
     this.project.implementationStatusId = value;
   }
 
-  restoreSector(obj: ProjectSector) {
+  /**
+   * Add sector list sector and remove sector with sectors
+   * @param {ProjectSector} obj
+   */
+  restoreSector(obj: ProjectSector): void {
     this.sectorsList.push(obj.sector);
     this.project.sectors = this.project.sectors.filter(o => o.sector.id != obj.sector.id);
   }
 
-  restoreLocation(obj: ProjectLocation) {
+  /**
+   * Remove location with locations
+   * @param {ProjectSector} obj
+   */
+  restoreLocation(obj: ProjectLocation): void {
     this.project.locations = this.project.locations.filter(o => o.district.id != obj.district.id);
   }
 
-  editLocation(obj: ProjectLocation) {
+  /**
+   * Open popup and set selected country, district, percent values
+   * @param {ProjectLocation} obj
+   */
+  editLocation(obj: ProjectLocation): void {
     this.countryid = obj.country.id;
     this.districtId = obj.district.id;
     this.locationPercent = obj.percent;
@@ -187,13 +272,20 @@ export class ProjectComponent implements OnInit {
     this.isEditedLocation = true;
   }
 
-  ngOnInit() {
+  /**
+   * Initialize formgroup variable
+   */
+  initForm(): void {
     this.form = new FormGroup({
       code: new FormControl('', Validators.required),
       title: new FormControl('', Validators.required)
     });
-    this.getImplementationStatusesList();
-    this.getSectorsList();
+  }
+
+  /**
+   * Check addable or editable status
+   */
+  checkNavigateStatus(): void {
     this.route.params.subscribe(params => {
       if (+params['id']) {
         this.getProjectById(+params['id']);
@@ -202,5 +294,12 @@ export class ProjectComponent implements OnInit {
         this.project = new Project();
       }
     });
+  }
+
+  ngOnInit() {
+    this.initForm();
+    this.initImplementationStatusesList();
+    this.initSectorsList();
+    this.checkNavigateStatus();
   }
 }

@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {ProjectLocation} from "../shared/model/project-location";
 
 @Component({
-  selector: 'locations-list-app',
+  selector: 'sis-locations-list',
   templateUrl: './locations-list.component.html',
   styleUrls: ['./locations-list.component.css']
 })
@@ -18,7 +18,7 @@ export class LocationsListComponent {
    * Delete location
    * @param {ProjectLocation} obj
    */
-  deleteLocation(obj: ProjectLocation) {
+  deleteLocation(obj: ProjectLocation): void {
     this.deletedLocation.emit(obj);
   }
 
@@ -26,7 +26,7 @@ export class LocationsListComponent {
    * Edit location
    * @param {ProjectLocation} obj
    */
-  editLocation(obj: ProjectLocation){
+  editLocation(obj: ProjectLocation): void {
     this.editedLocation.emit(obj);
   }
 
@@ -34,7 +34,7 @@ export class LocationsListComponent {
    * Sort location by country or district name ASC
    * @param {string} by
    */
-  sortASC(by: string) {
+  sortASC(by: string): void {
     if (by == "country") {
       this.sortField = by;
     } else {
@@ -47,7 +47,7 @@ export class LocationsListComponent {
    * Sort location by country or district name DESC
    * @param {string} by
    */
-  sortDESC(by: string) {
+  sortDESC(by: string): void {
     if (by == "country") {
       this.sortField = by;
     } else {

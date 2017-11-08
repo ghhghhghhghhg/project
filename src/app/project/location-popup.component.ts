@@ -4,7 +4,7 @@ import {ProjectLocation} from "../shared/model/project-location";
 import {Classifier} from "../shared/model/classifier";
 
 @Component({
-  selector: 'location-popup-app',
+  selector: 'sis-location-popup',
   templateUrl: './location-popup.component.html',
   styleUrls: ['./location-popup.component.css']
 })
@@ -49,7 +49,7 @@ export class LocationPopupComponent implements OnInit {
    * After country select initialize district list by selected country ID
    * @param {number} value
    */
-  initDistricts() {
+  initDistricts(): void {
     this.dataService.getDistricts(this.countryId).subscribe(
       data => {
         this.districtsList = data;
@@ -67,32 +67,25 @@ export class LocationPopupComponent implements OnInit {
    * After change country ID reinitialize districts list
    * @param {number} selectedId
    */
-  changeCountryId(selectedId: number) {
+  changeCountryId(selectedId: number): void {
     this.countryId = selectedId;
-    this.resetDistricts();
-    this.initDistricts();
-  }
-
-  /**
-   * Reset districts list
-   */
-  resetDistricts() {
     this._districtId = -1;
+    this.initDistricts();
   }
 
   /**
    * After select district set ditrictId selected ID
    * @param {number} selectedId
    */
-  changeDistrictId(selectedId: number) {
+  changeDistrictId(selectedId: number): void {
     this._districtId = selectedId;
   }
 
   /**
    * If inserted values is valid add new location or if edited change edit location
    */
-  addLocation() {
-    if(!this.isValid()){
+  addLocation(): void {
+    if (!this.isValid()) {
       return;
     }
     //TODO in combo-box change Id to classifier
@@ -121,7 +114,7 @@ export class LocationPopupComponent implements OnInit {
    * Return inserted values is valid
    * @returns {boolean}
    */
-  isValid(): boolean{
+  isValid(): boolean {
     return this.isValidPercent() && this.countryId != -1 && this.districtId != -1;
   }
 
@@ -129,8 +122,8 @@ export class LocationPopupComponent implements OnInit {
    * Return inserted percent value is valid
    * @returns {boolean}
    */
-  isValidPercent(): boolean{
-    let perc = this.isEdited ? this.editedLocation.percent ? - this.editedLocation.percent : 0 : 0;
+  isValidPercent(): boolean {
+    let perc = this.isEdited ? this.editedLocation.percent ? -this.editedLocation.percent : 0 : 0;
     for (let obj of this.locations) {
       if (obj.percent) {
         perc += obj.percent;
@@ -146,7 +139,7 @@ export class LocationPopupComponent implements OnInit {
   /**
    * Reset popup values
    */
-  resetPopup(){
+  resetPopup(): void {
     this.closePopUp.emit();
     this.countryId = -1;
     this._districtId = -1;
@@ -158,14 +151,14 @@ export class LocationPopupComponent implements OnInit {
   /**
    * Close popup and reset values
    */
-  cancel() {
+  cancel(): void {
     this.resetPopup();
   }
 
   /**
    * Initialize countries list
    */
-  countrieslistInit() {
+  countrieslistInit(): void {
     this.dataService.getCountries().subscribe(
       data =>
         this.countriesList = data
