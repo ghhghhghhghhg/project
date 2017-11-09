@@ -47,7 +47,6 @@ export class LocationPopupComponent implements OnInit {
 
   /**
    * After country select initialize district list by selected country ID
-   * @param {number} value
    */
   initDistricts(): void {
     this.dataService.getDistricts(this.countryId).subscribe(

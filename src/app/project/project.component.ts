@@ -6,6 +6,7 @@ import {DataService} from "../shared/services/api/data.service";
 import {ProjectSector} from "../shared/model/project-sector";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ProjectLocation} from "../shared/model/project-location";
+import {ResponseStatus} from "../shared/model/response-status";
 
 @Component({
   selector: 'project-app',
@@ -174,15 +175,28 @@ export class ProjectComponent implements OnInit {
   }
 
   /**
+   * Alert message if response success false
+   * @param data
+   */
+  alertWarning(data: ResponseStatus):void{
+    if(!data.success){
+      alert(data.message);
+    }
+  }
+
+  /**
    * Save project
    */
   saveProject(): void {
     this.genModifyInformation();
     if (this.project.id) {
-      this.dataService.putProject(this.project).subscribe()
+      this.dataService.putProject(this.project).subscribe(
+        data => this.alertWarning(data)
+      )
     } else {
       this.dataService.postProject(this.project).subscribe(
         data => {
+          this.alertWarning(data);
           this.project.id = data.id;
         }
       )
@@ -197,6 +211,7 @@ export class ProjectComponent implements OnInit {
     if (this.project.id) {
       this.dataService.putProject(this.project).subscribe(
         data => {
+          this.alertWarning(data);
           if (data.success) {
             this.redirect();
           }
@@ -205,6 +220,7 @@ export class ProjectComponent implements OnInit {
     } else {
       this.dataService.postProject(this.project).subscribe(
         data => {
+          this.alertWarning(data);
           if (data.success) {
             this.redirect();
           }

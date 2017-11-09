@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {Project} from "../shared/model/project";
 import {DataService} from "../shared/services/api/data.service";
+import {ResponseStatus} from "../shared/model/response-status";
 
 @Component({
   selector: 'sis-portfolio',
@@ -11,6 +12,9 @@ import {DataService} from "../shared/services/api/data.service";
 export class PortfolioComponent implements OnInit {
 
   projectsPreview: Project[] = [];
+  sortByField: string = 'code';
+  isSortByDESC: boolean = false;
+  myDate: Date;
 
   constructor(private router: Router, @Inject("DataService") private dataService: DataService) {
   }
@@ -29,12 +33,23 @@ export class PortfolioComponent implements OnInit {
   }
 
   /**
+   * Alert message if response success false
+   * @param data
+   */
+  alertWarning(data: ResponseStatus):void{
+    if(!data.success){
+      alert(data.message);
+    }
+  }
+
+  /**
    * Delite project with project ID
    * @param {number} value
    */
   deleteProject(value: number) {
     this.dataService.deleteProject(value).subscribe(
       data => {
+        this.alertWarning(data);
         if (data.success) {
           this.projectsPreview = this.projectsPreview.filter(pr => pr.id != data.id);
         }
@@ -58,7 +73,50 @@ export class PortfolioComponent implements OnInit {
     this.router.navigate(['/add-project']);
   }
 
+  /**
+   * Set sort parameters
+   * @param {string} by
+   */
+  setSortParam(by: string):void{
+    if (by == "code") {
+      this.sortByField = by;
+    } else {
+      this.sortByField = "title";
+    }
+  }
+
+  /**
+   * Sort projects by field name ASC
+   * @param {string} by
+   */
+  sortASC(by: string): void {
+    this.setSortParam(by);
+    this.isSortByDESC = false;
+  }
+
+  /**
+   * Sort projects by field name DESC
+   * @param {string} by
+   */
+  sortDESC(by: string): void {
+    this.setSortParam(by);
+    this.isSortByDESC = true;
+  }
+
+  /**
+   * Clock
+   */
+  utcTime(): void {
+    setInterval(() => {
+      this.myDate = new Date();
+      if(this.myDate.getHours() == 13 && this.myDate.getMinutes() == 0 && this.myDate.getSeconds() == 0){
+        alert("Presentation time ended. It's time for lunch, everyone's pleasant appetite");
+      }
+    }, 1000);
+  }
+
   ngOnInit() {
     this.initProjects();
+    this.utcTime();
   }
 }

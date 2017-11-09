@@ -1,19 +1,28 @@
 <header class="header">
   <div class="navbar navbar-fixed-top">
-    <h1 class="span">My First Angular Project</h1>
-    <h6>&copy; Copyright <i>2017/11/07 By Gor Hakobyan</i> &reg; Best Edition ver. 1.0.0</h6>
+    <div class="info">
+      <h1 class="span">My First Angular Project</h1>
+      <h6>&copy; Copyright <i>2017/11/07 By Gor Hakobyan</i> &reg; Best Edition ver. 1.1.0</h6>
+    </div>
+    <div class="clock"><h1>{{ myDate | date: 'HH:mm:ss'}}</h1></div>
   </div>
 </header>
 <div>
   <table class="table-striped table">
     <tr>
       <th>N</th>
-      <th>Code</th>
-      <th>Title</th>
+      <th>Code
+        <span><div class="glyphicon glyphicon-triangle-top" (click)="sortASC('code')"></div><div
+          class="glyphicon glyphicon-triangle-bottom" (click)="sortDESC('code')"></div></span>
+      </th>
+      <th>Title
+        <span><div class="glyphicon glyphicon-triangle-top" (click)="sortASC('code')"></div><div
+          class="glyphicon glyphicon-triangle-bottom" (click)="sortDESC('code')"></div></span>
+      </th>
       <th>Edit</th>
       <th>Delete</th>
     </tr>
-    <tr *ngFor="let o of projectsPreview; let index = index">
+    <tr *ngFor="let o of projectsPreview | sortByField: sortByField: isSortByDESC; let index = index">
       <td class="index" title="{{o.description}}">{{index + 1}}</td>
       <td class="code" title="{{o.description}}">{{o.code}}</td>
       <td title="{{o.description}}">{{o.title}}</td>

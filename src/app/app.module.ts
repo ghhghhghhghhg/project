@@ -14,6 +14,7 @@ import {DataServiceImpl} from "./shared/services/data.service";
 import {DataSerializerImpl} from "./shared/services/data.serializer";
 import {DateComponent} from "./controller/date/date.component";
 import {SortPipe} from "./pipes/sort.pipe";
+import {SortByArrayFieldPipe} from "./pipes/sort-by-array-field.pipe";
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {SortPipe} from "./pipes/sort.pipe";
     LocationsListComponent,
     LocationPopupComponent,
     DateComponent,
-    SortPipe
+    SortPipe,
+    SortByArrayFieldPipe
   ],
   imports: [
     BrowserModule,

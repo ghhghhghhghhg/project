@@ -44,3 +44,13 @@ h1, h6 {
 .index {
   width: 30px;
 }
+.clock{
+  float: right;
+  width: 200px;
+  margin-top: 10px;
+}
+.info{
+  float: left;
+  width: 500px;
+  margin-left: 1%;
+}
