@@ -98,7 +98,7 @@ export class ProjectComponent implements OnInit {
    * Get edited project date
    * @param {number} value
    */
-  getProjectById(value: number): void {
+  initProjectById(value: number): void {
     this.dataService.getProject(value).subscribe(
       data => {
         this.project = data;
@@ -304,7 +304,7 @@ export class ProjectComponent implements OnInit {
   checkNavigateStatus(): void {
     this.route.params.subscribe(params => {
       if (+params['id']) {
-        this.getProjectById(+params['id']);
+        this.initProjectById(+params['id']);
       } else {
         this.info = 'Create new project';
         this.project = new Project();

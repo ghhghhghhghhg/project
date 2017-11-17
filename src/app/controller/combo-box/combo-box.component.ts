@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
 
-interface List {
+interface ComboBoxItem {
   id: number,
   name: string
 }
@@ -11,7 +11,7 @@ interface List {
   styleUrls: ['./combo-box.component.css']
 })
 export class ComboBoxComponent {
-  @Input() listObj: List;
+  @Input() listObj: ComboBoxItem[];
   @Input() selectedValue: number = -1;
   @Output() selectedId = new EventEmitter<number>();
 

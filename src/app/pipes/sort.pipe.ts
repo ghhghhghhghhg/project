@@ -1,4 +1,8 @@
 import {Pipe} from "@angular/core";
+import {Classifier} from "../shared/model/classifier";
+interface SubEntity{
+  classifier(): Classifier;
+}
 
 @Pipe({
   name: "sort"
@@ -12,7 +16,7 @@ export class SortPipe {
    * @param {boolean} desc
    * @returns {any[]}
    */
-  transform(array: any[], field: string, desc: boolean = false): any[] {
+  transform(array: SubEntity[], field: string, desc: boolean = false): SubEntity[] {
     setTimeout(() => {
       array.sort((a: any, b: any) => {
         if (desc) {
